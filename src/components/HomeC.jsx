@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import './home.css';
+import { useLocation, Link } from 'react-router-dom';
 
 function HomeC() {
   const [text, setText] = useState('');
@@ -45,8 +46,8 @@ function HomeC() {
       <div className="intro">
         <h3 className='dynamic-text'>{text}</h3>
         <div className="buttons d-grid gap-2 d-md-flex mx-auto">
-          <button className='btn btn-warning me-md-2 hover-effect'>Hire Me</button>
-          <button className='btn btn-warning me-md-2 hover-effect'>My Work</button>
+        <Link to='/contact'><button className='btn btn-warning me-md-2 hover-effect'>Hire Me</button></Link>
+        <Link to='/portfolio'><button className='btn btn-warning me-md-2 hover-effect'>My Work</button></Link>
         </div>
       </div>
 
