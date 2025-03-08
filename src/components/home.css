@@ -1,0 +1,117 @@
+.home{
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    min-height: 100vh;
+    padding: 2rem;
+  }
+
+  @media (min-width: 769px) {
+    .home {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .home {
+      flex-direction: column;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 20px;
+    }
+  }
+
+  .btn{
+    color: #ffffff;
+  }
+
+  .intro {
+    flex: 1;
+    text-align: left;
+    max-width: 500px;
+  }
+
+  @media (max-width: 768px) {
+    .intro {
+      text-align: center;
+      max-width: 90%;
+    }
+  }
+
+  .intro h4, .intro h5, .intro h3 {
+    margin: 0.5rem 0;
+  }
+
+  img {
+    flex: 1;
+    max-width: 100%;
+    height: auto;
+  }
+
+  @media (max-width: 768px) {
+    img {
+      max-width: 100%;
+      margin-top: 1rem;
+    }
+  }
+
+  .buttons {
+    margin-top: 1rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+  @media (max-width: 408px) {
+    img {
+      max-width: 100%;
+      margin-top: 1rem;
+    }
+  }
+
+  .buttons {
+    margin-top: 1rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  @media (max-width: 768px) {
+    .buttons {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+
+  button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    transition: transform 0.2s ease-in-out;
+  }
+
+  button:hover {
+    transform: scale(1.05);
+  }
+
+  .snowflake {
+    position: fixed;
+    top: 0;
+    color: orange;
+    font-size: 1.5rem;
+    user-select: none;
+    pointer-events: none;
+    animation: fall linear infinite;
+  }
+
+  @keyframes fall {
+    0% {
+      transform: translateY(-10vh) rotate(0deg);
+    }
+    100% {
+      transform: translateY(100vh) rotate(360deg);
+    }
+  }

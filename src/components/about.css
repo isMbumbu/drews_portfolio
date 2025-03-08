@@ -1,0 +1,105 @@
+/* About Page Flexbox Layout */
+.about-container {
+    display: flex;
+    justify-content: space-between; /* Even space between sections */
+    align-items: flex-start; /* Align them at the top */
+    gap: 2rem;
+    padding: 2rem;
+  }
+  
+  .about-content, .about-skills, .about-education {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    padding: 2rem;
+    flex: 1; /* Equal width for each section */
+    max-width: 400px; /* Prevent them from getting too wide */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+  
+  .about-content:hover, .about-skills:hover, .about-education:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  }
+  
+  .about-content p {
+    line-height: 1.8;
+    color: #333;
+  }
+  
+  h3 {
+    text-align: center;
+    color: #2c3e50;
+    font-size: 1.8rem;
+  }
+  
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 0;
+  }
+  
+  
+  ul li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  ul li svg {
+    font-size: 1.5rem;
+  }
+  
+  .about-education p {
+    text-align: center;
+    color: #555;
+  }
+  
+  /* For tablets and smaller devices */
+  @media (max-width: 1024px) {
+    .about-container {
+      flex-direction: column; /* Stack on smaller screens */
+      align-items: center;
+      padding: 1rem;
+    }
+  
+    .about-content, .about-skills, .about-education {
+      width: 100%; /* Full width on smaller screens */
+      max-width: 90%; /* Fit nicely within the screen */
+      padding: 1.5rem;
+    }
+  
+    ul {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  
+  /* For phones */
+  @media (max-width: 768px) {
+    .about-container {
+      padding: 1rem;
+    }
+  
+    .about-content, .about-skills, .about-education {
+      width: 100%;
+      max-width: 100%; /* Full width of device */
+      padding: 1rem;
+    }
+  
+    h3 {
+      font-size: 1.5rem;
+    }
+  
+    p, ul li {
+      font-size: 0.9rem;
+    }
+  
+    ul {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+  
