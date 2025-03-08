@@ -10,10 +10,11 @@ function Navigation() {
   const navItems = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
+    
+    // { name: 'Blog', path: '/blog' },
+    { name: 'Projects', path: '/portfolio' },
+    { name: 'Services', path: '/services' },
     { name: 'Contact', path: '/contact' },
-    { name: 'Blog', path: '/blog' },
-    { name: 'Portfolio', path: '/portfolio' },
-    { name: 'Services', path: '/services' }
   ];
 
   return (

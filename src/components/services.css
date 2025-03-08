@@ -1,0 +1,93 @@
+.services-section {
+    text-align: center;
+    padding: 4rem 2rem;
+    background-image: url(services.jpg);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    position: relative;
+  }
+  
+  .services-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Dark overlay for better text contrast */
+    z-index: 1;
+  }
+  
+  .section-title,
+  .services-container {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .section-title {
+    color: #ffc107; /* Matching your theme */
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  
+  .services-container {
+    display: flex;
+    flex-direction: column; /* Stacks cards on smaller screens */
+    align-items: center;
+    gap: 2rem;
+  }
+  
+  .service-card {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    padding: 2rem;
+    width: 100%; /* Full width */
+    max-width: 1200px; /* Prevents it from being too wide on huge screens */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+  
+  .service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  }
+  
+  .service-icon {
+    font-size: 3rem;
+    color: #ffc107; /* Matching your bg-warning theme */
+    margin-bottom: 1rem;
+  }
+  
+  h3 {
+    font-size: 1.5rem;
+    color: #2c3e50;
+  }
+  
+  p {
+    color: #555;
+    line-height: 1.6;
+  }
+  
+  /* Responsive design */
+  @media (min-width: 768px) {
+    .services-container {
+      flex-direction: row; /* Cards side by side on larger screens */
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  
+    .service-card {
+      width: 45%; /* Two cards per row on medium screens */
+    }
+  }
+  
+  @media (min-width: 1200px) {
+    .service-card {
+      width: 30%; /* Three cards per row on large screens */
+    }
+  }
+  

@@ -43,6 +43,11 @@
   
   /* Stack on smaller screens */
   @media (max-width: 768px) {
+    .portfolio-image {
+        display: block; /* Ensure they are not set to display: none */
+        max-width: 100%; /* Make sure they don’t overflow */
+        height: auto; /* Maintain aspect ratio */
+      }
     .portfolio-container {
       grid-template-columns: 1fr; /* One column for smaller devices */
     }

@@ -1,4 +1,4 @@
-.home{
+.home {
     margin-top: 50px;
     display: flex;
     align-items: center;
@@ -6,97 +6,104 @@
     flex-wrap: wrap;
     min-height: 100vh;
     padding: 2rem;
+    width: 100%; /* Ensures it never overflows the viewport */
+    box-sizing: border-box; /* Includes padding in width calculations */
   }
-
+  
+  /* Layout for larger screens */
   @media (min-width: 769px) {
     .home {
-      display: flex;
       flex-direction: row;
       justify-content: space-between;
     }
   }
-
+  
+  /* Layout for smaller screens */
   @media (max-width: 768px) {
     .home {
       flex-direction: column;
       text-align: center;
       padding: 1rem;
-      margin-top: 20px;
+      margin-top: 50px;
+      background-image: url('WhatsApp_Image_2025-03-08_at_17.50.08-removebg-preview.png');
+      background-size: cover; /* Scales the image nicely */
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
     }
   }
-
-  .btn{
+  
+  /* Button styling */
+  .btn {
     color: #ffffff;
   }
-
+  
   .intro {
     flex: 1;
     text-align: left;
     max-width: 500px;
   }
-
+  
   @media (max-width: 768px) {
     .intro {
       text-align: center;
       max-width: 90%;
+      width: 100%; /* Ensures the intro fits small screens */
     }
   }
-
-  .intro h4, .intro h5, .intro h3 {
+  
+  .intro h4,
+  .intro h5,
+  .intro h3 {
     margin: 0.5rem 0;
+    word-wrap: break-word; /* Prevents text overflow */
   }
-
+  
+  /* Floating image for larger screens */
   img {
     flex: 1;
     max-width: 100%;
     height: auto;
   }
-
+  
   @media (max-width: 768px) {
     img {
-      max-width: 100%;
-      margin-top: 1rem;
+      display: none; /* Hides the image on small screens when using it as background */
     }
   }
-
+  
+  /* Button container */
   .buttons {
     margin-top: 1rem;
     display: flex;
     gap: 1rem;
     justify-content: center;
+    flex-wrap: wrap; /* Ensures buttons wrap on smaller screens */
   }
-  @media (max-width: 408px) {
-    img {
-      max-width: 100%;
-      margin-top: 1rem;
-    }
-  }
-
-  .buttons {
-    margin-top: 1rem;
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-  }
-
+  
   @media (max-width: 768px) {
     .buttons {
       flex-direction: column;
       gap: 0.5rem;
+      width: 100%; /* Ensures buttons don’t get squished */
     }
   }
-
+  
+  /* Button styling */
   button {
     padding: 0.75rem 1.5rem;
     font-size: 1rem;
     border-radius: 8px;
     transition: transform 0.2s ease-in-out;
+    width: 100%; /* Full-width buttons on small devices */
+    max-width: 300px; /* But not too wide */
   }
-
+  
   button:hover {
     transform: scale(1.05);
   }
-
+  
+  /* Snowflake effect */
   .snowflake {
     position: fixed;
     top: 0;
@@ -106,7 +113,7 @@
     pointer-events: none;
     animation: fall linear infinite;
   }
-
+  
   @keyframes fall {
     0% {
       transform: translateY(-10vh) rotate(0deg);
@@ -115,3 +122,4 @@
       transform: translateY(100vh) rotate(360deg);
     }
   }
+  
