@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import './home.css';
 import { useLocation, Link } from 'react-router-dom';
+import floatingImage from '/WhatsApp_Image_2025-03-08_at_17.50.08-removebg-preview.png'
 
 function HomeC() {
   const [text, setText] = useState('');
@@ -52,10 +53,11 @@ function HomeC() {
       </div>
 
       <img 
-        src='WhatsApp_Image_2025-03-08_at_17.50.08-removebg-preview.png' 
-        width={500} 
-        className='floating-image' 
-      />
+  src={floatingImage} 
+  alt='Floating image'
+  className='floating-image'
+/>
+
     </div>
   );
 }
