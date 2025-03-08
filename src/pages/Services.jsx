@@ -2,6 +2,7 @@ import React from 'react';
 import '../components/services.css';
 import { FaCode, FaLightbulb, FaChartLine } from 'react-icons/fa';
 import Navigation from '../components/Navigation';
+import background from '/services.jpg';
 
 const services = [
   {
@@ -27,7 +28,7 @@ const services = [
 function Services() {
   return (<>
     <Navigation />
-    <section className="services-section">
+    <section className="services-section"style={{ backgroundImage: `url(${background})` }}>
       <h2 className="section-title">What I Do</h2>
       <div className="services-container">
         {services.map(service => (

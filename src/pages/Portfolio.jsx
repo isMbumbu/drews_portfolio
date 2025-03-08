@@ -3,6 +3,7 @@ import Navigation from '../components/Navigation'
 import '../components/portfolio.css'
 import gitImg from '/git.png'
 
+
 function Portfolio() {
   return (
     <div>
