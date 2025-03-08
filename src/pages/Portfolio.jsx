@@ -1,6 +1,7 @@
 import React from 'react'
 import Navigation from '../components/Navigation'
 import '../components/portfolio.css'
+import gitImg from '/git.png'
 
 function Portfolio() {
   return (
@@ -34,7 +35,7 @@ function Portfolio() {
         <div className="portfolio-item">
           <a href="https://github.com/isMbumbu" target="_blank" rel="noopener noreferrer">
             <img 
-              src="git.png" 
+              src={gitImg} 
               alt="GitHub Profile"
               className="portfolio-image"
             />
