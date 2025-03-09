@@ -2,15 +2,14 @@
     margin-top: 50px;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
     flex-wrap: wrap;
     min-height: 100vh;
     padding: 2rem;
-    width: 100%; /* Ensures it never overflows the viewport */
-    box-sizing: border-box; /* Includes padding in width calculations */
+    width: 100%; 
+    box-sizing: border-box; 
 }
 
-/* Layout for larger screens */
 @media (min-width: 769px) {
     .home {
         flex-direction: row;
@@ -18,21 +17,21 @@
     }
 }
 
-/* Layout for smaller screens */
+
 @media (max-width: 768px) {
     .home {
         flex-direction: column;
         text-align: center;
         padding: 1rem;
-        margin-top: 50px;
-        background-size: cover; /* Scales the image nicely */
+        margin-top: 100px;
+        background-size: cover; 
         background-position: center;
         background-repeat: no-repeat;
         background-attachment: fixed;
     }
 }
 
-/* Button styling */
+
 .btn {
     color: #ffffff;
 }
@@ -46,8 +45,8 @@
 @media (max-width: 768px) {
     .intro {
         text-align: center;
-        max-width: 90%; /* Allow more width on smaller screens */
-        width: 100%; /* Ensures the intro fits small screens */
+        max-width: 90%; 
+        width: 100%; 
     }
 }
 
@@ -55,58 +54,57 @@
 .intro h5,
 .intro h3 {
     margin: 0.5rem 0;
-    word-wrap: break-word; /* Prevents text overflow */
+    word-wrap: break-word; 
 }
 
-/* Floating image for larger screens */
+
 img {
     flex: 1;
     max-width: 100%;
     height: auto;
+    object-fit: contain; /* Ensures the whole image is visible */
 }
 
 @media (max-width: 768px) {
     .floating-image {
-        display: block; /* Ensures it stays visible */
-        width: 100%; /* Takes full width of its container */
-        max-width: 300px; /* Optional: caps size so it doesn’t get too big */
-        height: auto; /* Keeps the aspect ratio */
-        margin: 1rem auto; /* Centers it horizontally */
+        display: block;
+        width: 120%;  
+        max-width: 300px; 
+        height: auto;
+        margin: -350px auto 0; /* This keeps the negative margin to pull it up */
     }
 }
 
-/* Button container */
 .buttons {
     margin-top: 1rem;
     display: flex;
     gap: 1rem;
     justify-content: center;
-    flex-wrap: wrap; /* Ensures buttons wrap on smaller screens */
+    flex-wrap: wrap; 
 }
 
 @media (max-width: 768px) {
     .buttons {
         flex-direction: column;
         gap: 0.5rem;
-        width: 100%; /* Ensures buttons don’t get squished */
+        width: 100%;
     }
 }
 
-/* Button styling */
 button {
     padding: 0.75rem 1.5rem;
     font-size: 1rem;
     border-radius: 8px;
     transition: transform 0.2s ease-in-out;
-    width: 100%; /* Full-width buttons on small devices */
-    max-width: 300px; /* But not too wide */
+    width: 100%; 
+    max-width: 300px; 
 }
 
 button:hover {
     transform: scale(1.05);
 }
 
-/* Snowflake effect */
+
 .snowflake {
     position: fixed;
     top: 0;

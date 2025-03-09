@@ -3,6 +3,7 @@
     grid-template-columns: repeat(2, 1fr); /* Two columns on larger screens */
     gap: 2rem;
     padding: 2rem;
+    margin-top: 50px;
   }
   
   .portfolio-item {
