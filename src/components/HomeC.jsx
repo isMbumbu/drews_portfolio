@@ -5,7 +5,7 @@ import floatingImage from '/WhatsApp_Image_2025-03-08_at_17.50.08-removebg-previ
 
 function HomeC() {
   const [text, setText] = useState('');
-  const fullText = "Hello, My name is AMBUKA. I am a TECH-BRO and a FULL-STACK DEVELOPER.";
+  const fullText = "Hello, My name is AMBUKA. I am a Computer Scientist and a FULL-STACK DEVELOPER.";
   const speed = 80;
 
   useEffect(() => {
