@@ -71,7 +71,7 @@ img {
         width: 120%;  
         max-width: 300px; 
         height: auto;
-        margin: -350px auto 0; /* This keeps the negative margin to pull it up */
+        margin: -250px auto 0; /* This keeps the negative margin to pull it up */
     }
 }
 

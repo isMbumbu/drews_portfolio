@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 import Navigation from '../components/Navigation'
 import HomeC from '../components/HomeC'
 import About from './About'
@@ -9,14 +9,14 @@ import Footer from '../components/Footer'
 function Home() {
   return (
     <div>
-      <Navigation/>
+      <Navigation />
       <HomeC />
-      <About/>
-      <Services/>
-      <h1>My Projects</h1> 
-      <Portfolio/>
-      <Footer />
+      <About style={{ marginTop: '-50px' }} /> {/* Adjusted negative margin */}
 
+      <Services />
+      
+      <Portfolio />
+      <Footer />
     </div>
   )
 }
