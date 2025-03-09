@@ -1,67 +1,60 @@
+/* Navbar Styles */
 .navbar {
-    padding: 0.5rem 1rem; /* Adjust padding for smaller screens */
-}
-
-.nav-link {
-    color: #000; /* Change link color */
-}
-
-.nav-link.active {
-    font-weight: bold; /* Highlight active link */
-}
-
-.signature {
-    font-size: 0.8rem; /* Adjust signature font size */
-}
-
-/* Media Queries for Responsive Design */
-@media (min-width: 768px) {
-    .navbar-nav {
-        flex-direction: row; /* Horizontal layout for larger screens */
-    }
-
-    .navbar-nav .nav-item {
-        margin: 0 1rem; /* Space between nav items */
-    }
-
-    .signature {
-        display: inline; /* Show signature on larger screens */
-    }
-}
-
-@media (max-width: 576px) {
-    .navbar-brand {
-        font-size: 1.2rem; /* Smaller font size for mobile */
-    }
-
-    .signature {
-        display: none; /* Hide signature on mobile */
-    }
-}
-.nav-link {
-    color: #020202 !important; 
+    padding: 0.5rem 1rem;
+  }
+  
+  .navbar-brand {
+    font-style: italic;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-size: 1.2rem;
+  }
+  
+  .nav-link {
+    color: #020202 !important;
     transition: color 0.3s ease, transform 0.3s ease;
   }
   
   .nav-link:hover {
-    color: #f7f5f5 !important; 
-    transform: scale(1.1); 
+    color: #f7f5f5 !important;
+    transform: scale(1.1);
   }
   
   .nav-link.active {
     font-weight: bold;
     color: #ffffff !important;
   }
+  
+  .navbar-toggler {
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    padding: 0;
+  }
+  
+  .navbar-toggler-icon {
+    background-color: transparent !important;
+  }
+  
+  
+  /* Signature */
   .signature {
-    font-family: 'Dancing Script', cursive; 
-    font-size: 1.5rem; 
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem;
     font-style: italic;
     font-weight: 400;
-    color: #ffffff; 
+    color: #ffffff;
     letter-spacing: 1px;
   }
-  .navbar-brand{
-    font-style: italic;
-    font-weight: 600;
-    letter-spacing: 1px;
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .navbar-brand {
+      font-size: 1rem;
+    }
+  
+    .signature {
+      display: none;
+    }
   }
+  
