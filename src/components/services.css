@@ -1,13 +1,22 @@
 .services-section {
-    text-align: center;
-    padding: 4rem 2rem;
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    position: relative;
-  }
-  
+  text-align: center;
+  width: 100%; /* Fixes overflow issue */
+  padding: 2rem 5%; /* Keeps padding without messing layout */
+  box-sizing: border-box;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%; 
+  overflow-x: hidden; /* Stops horizontal scroll */
+}
+
   .services-section::before {
     content: '';
     position: absolute;
@@ -46,7 +55,7 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     padding: 2rem;
     width: 100%; /* Full width */
-    max-width: 1200px; /* Prevents it from being too wide on huge screens */
+    max-width: none; 
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
   }
   

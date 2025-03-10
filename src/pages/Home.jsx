@@ -5,10 +5,11 @@ import About from './About'
 import Portfolio from './Portfolio'
 import Services from './Services'
 import Footer from '../components/Footer'
+import '../App.css'
 
 function Home() {
   return (
-    <div>
+    <div className='biggy'>
       <Navigation />
       <HomeC />
       <About style={{ marginTop: '-50px' }} /> {/* Adjusted negative margin */}

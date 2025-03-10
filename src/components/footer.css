@@ -1,6 +1,7 @@
 .footer {
     width: 100%; /* Full width */
-    padding: 2rem 1rem;
+    padding: 2rem 5%; /* Optional: Adjust padding if needed */
+    box-sizing: border-box;
     margin-top: 4rem;
     background-color: #ffc107; /* Keeping the bg-warning theme */
     color: #1f1f1f;
