@@ -18,7 +18,7 @@ function Navigation() {
   ];
 
   return (
-    <nav className='navbar navbar-expand-lg bg-warning fixed-top justify-content-between px-5'>
+    <nav className='navbar navbar-expand-lg bg-secondary fixed-top justify-content-between px-5'>
 
       <div className='container-fluid'>
         <h1 className='navbar-brand'>Andrew Ambuka&#39;s</h1>

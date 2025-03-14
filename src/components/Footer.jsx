@@ -4,7 +4,7 @@ import './footer.css';
 
 function Footer() {
   return (
-    <footer className='footer bg-warning text-center'>
+    <footer className='footer bg-secondary text-center'>
       <div className='container'>
         <p className='footer-text'>© {new Date().getFullYear()} Andrew Ambuka. All Rights Reserved.</p>
         

@@ -110,7 +110,7 @@ button:hover {
 .snowflake {
     position: fixed;
     top: 0;
-    color: orange;
+    color: rgb(59, 59, 58);
     font-size: 1.5rem;
     user-select: none;
     pointer-events: none;

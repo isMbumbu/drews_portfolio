@@ -17,9 +17,13 @@
   .portfolio-item:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    background:#ffc107
+    background:#6c757d 
+    
   }
-  
+  .portfolio-item:hover h3,
+.portfolio-item:hover p {
+    color: white; 
+}
   .portfolio-image {
     width: 100%;
     max-width: 400px;
@@ -45,6 +49,7 @@
   /* Stack on smaller screens */
   @media (max-width: 768px) {
     .portfolio-image {
+        margin-top: 50px;
         display: block; /* Ensure they are not set to display: none */
         max-width: 100%; /* Make sure they don’t overflow */
         height: auto; /* Maintain aspect ratio */

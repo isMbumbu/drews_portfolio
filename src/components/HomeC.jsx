@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './home.css';
 import { useLocation, Link } from 'react-router-dom';
-import floatingImage from '/WhatsApp_Image_2025-03-08_at_17.50.08-removebg-preview.png'
+import floatingImage from '/home-removebg-preview.png'
 
 function HomeC() {
   const [text, setText] = useState('');
@@ -47,8 +47,8 @@ function HomeC() {
       <div className="intro">
         <h3 className='dynamic-text'>{text}</h3>
         <div className="buttons d-grid gap-2 d-md-flex mx-auto">
-        <Link to='/contact'><button className='btn btn-warning me-md-2 hover-effect'>Hire Me</button></Link>
-        <Link to='/portfolio'><button className='btn btn-warning me-md-2 hover-effect'>My Work</button></Link>
+        <Link to='/contact'><button className='btn btn-secondary me-md-2 hover-effect'>Hire Me</button></Link>
+        <Link to='/portfolio'><button className='btn btn-secondary me-md-2 hover-effect'>My Work</button></Link>
         </div>
       </div>
 
