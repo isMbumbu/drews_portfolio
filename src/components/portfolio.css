@@ -5,6 +5,10 @@
     padding: 2rem;
     margin-top: 50px;
   }
+
+  .heading{
+    text-align: center;
+  }
   
   .portfolio-item {
     background: #ffffff;

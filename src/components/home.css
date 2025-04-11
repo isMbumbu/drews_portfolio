@@ -12,7 +12,7 @@
     box-sizing: border-box; 
 }
 
-@media (min-width: 769px) {
+@media (min-width: 768px) {
     .home {
         flex-direction: row;
         justify-content: space-between;
@@ -25,7 +25,7 @@
         flex-direction: column;
         text-align: center;
         padding: 1rem;
-        margin-top: 100px;
+        margin-top: 10px;
         background-size: cover; 
         background-position: center;
         background-repeat: no-repeat;
@@ -73,7 +73,9 @@ img {
         width: 120%;  
         max-width: 300px; 
         height: auto;
-        margin: -250px auto 0; /* This keeps the negative margin to pull it up */
+        margin: -160px auto 0; /* This keeps the negative margin to pull it up */
+        border-radius: 100%;
+        border-color: rgb(116, 116, 110);
     }
 }
 
@@ -87,9 +89,12 @@ img {
 
 @media (max-width: 768px) {
     .buttons {
-        flex-direction: column;
+        /* display: flex;
+        flex-direction: row; */
+        flex-direction: row;
         gap: 0.5rem;
         width: 100%;
+        align-items: center;
     }
 }
 

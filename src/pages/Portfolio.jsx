@@ -9,7 +9,7 @@ function Portfolio() {
     <div>
       <Navigation />
       <div className="portfolio-container">
-      <h1>My Projects</h1>
+      <h1 className="heading">My Projects</h1>
         <div className="portfolio-item">
           <a href="https://gyyym.netlify.app/" target="_blank" rel="noopener noreferrer">
             <img 
