@@ -66,6 +66,19 @@ img {
     height: auto;
     object-fit: contain; /* Ensures the whole image is visible */
 }
+.floating-image {
+    border-radius: 100%;
+    border: 2px solid rgb(110, 105, 105);
+    box-shadow: 0 0 10px rgba(110, 105, 105, 0.3);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .floating-image:hover {
+    border-color: rgb(231, 228, 228);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(200, 200, 255, 0.6);
+    transform: scale(1.05);
+  }
+  
 
 @media (max-width: 768px) {
     .floating-image {
@@ -74,9 +87,9 @@ img {
         max-width: 300px; 
         height: auto;
         margin: -160px auto 0; /* This keeps the negative margin to pull it up */
-        border-radius: 100%;
-        border-color: rgb(116, 116, 110);
+        transition: all 0.3s ease-in-out;
     }
+
 }
 
 .buttons {
