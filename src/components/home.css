@@ -82,11 +82,18 @@ img {
 
 @media (max-width: 768px) {
     .floating-image {
+        border-radius: 100%;
+        border: 2px transparent;
+        box-shadow: 0 0 10px;
+        transition: all 0.3s ease-in-out;
+      }
+    .floating-image {
         display: block;
         width: 120%;  
         max-width: 300px; 
         height: auto;
-        margin: -160px auto 0; /* This keeps the negative margin to pull it up */
+        margin: -100px auto 0; /* This keeps the negative margin to pull it up */
+
         transition: all 0.3s ease-in-out;
     }
 
