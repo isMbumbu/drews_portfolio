@@ -20,7 +20,7 @@ function Contact() {
           <a href="https://wa.me/0785592231" target="_blank" rel="noopener noreferrer" className="contact-link whatsapp">
             <i className="fab fa-whatsapp"></i> WhatsApp
           </a>
-          <a href="mailto:andrewambuka9@gmail.com" className="contact-link email">
+          <a href="mailto:ambukaa93@gmail.com" className="contact-link email">
             <i className="fas fa-envelope"></i> Email Me
           </a>
         </div>
