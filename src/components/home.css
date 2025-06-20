@@ -154,3 +154,8 @@ button:hover {
         transform: translateY(0);
     }
 }
+.intro {
+    z-index: 2;
+    position: relative;
+}
+
