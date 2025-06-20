@@ -47,12 +47,13 @@ function HomeC() {
       <div className="intro">
         <h3 className='dynamic-text'>{text}</h3>
        <div className="buttons">
-   <a 
-    href="/resume.pdf" 
-    className='btn btn-secondary hover-effect' 
-    download 
-  >
-    Download Resume
+  <a 
+  href="/resume.pdf" 
+  className='btn btn-secondary hover-effect' 
+  target="_blank" 
+  rel="noopener noreferrer"
+>
+    View Resume
   </a>
   <Link to='/portfolio'>
     <button className='btn btn-secondary hover-effect'>My Work</button>
