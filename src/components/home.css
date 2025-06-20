@@ -91,7 +91,7 @@ img {
     align-items: center;
     gap: 1rem; /* spacing between buttons */
     flex-wrap: wrap; /* wrap on smaller screens instead of overlapping */
-    margin-top: 2rem;
+    margin-top: 1rem;
     width: 100%;
     padding: 0 1rem; /* prevent edge collisions */
     box-sizing: border-box;
