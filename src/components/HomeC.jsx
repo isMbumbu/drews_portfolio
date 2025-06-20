@@ -46,10 +46,15 @@ function HomeC() {
     <div className='home container-fluid container-sm fade-slide'>
       <div className="intro">
         <h3 className='dynamic-text'>{text}</h3>
-        <div className="buttons d-grid gap-2 d-md-flex mx-auto">
-        <Link to='/contact'><button className='btn btn-secondary me-md-2 hover-effect'>Hire Me</button></Link>
-        <Link to='/portfolio'><button className='btn btn-secondary me-md-2 hover-effect'>My Work</button></Link>
-        </div>
+       <div className="buttons">
+  <Link to='/contact'>
+    <button className='btn btn-secondary hover-effect'>Hire Me</button>
+  </Link>
+  <Link to='/portfolio'>
+    <button className='btn btn-secondary hover-effect'>My Work</button>
+  </Link>
+</div>
+
       </div>
 
       <img 
