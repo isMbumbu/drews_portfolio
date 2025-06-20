@@ -22,7 +22,7 @@ function Portfolio() {
           <p>Helps gym owners, trainers, and members manage fitness routines and schedules.</p>
         </div>
           
-        <div className="portfolio-item">
+{/*         <div className="portfolio-item">
           <a href="https://anylawfirm.netlify.app" target="_blank" rel="noopener noreferrer">
             <img 
               src="image.png" 
@@ -32,7 +32,7 @@ function Portfolio() {
           </a>
           <h3>Law Connect</h3>
           <p>A law firm website for managing cases, documents, and client information.</p>
-        </div>
+        </div> */}
 
         <div className="portfolio-item">
           <a href="https://github.com/isMbumbu" target="_blank" rel="noopener noreferrer">
