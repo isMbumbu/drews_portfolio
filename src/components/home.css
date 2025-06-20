@@ -86,40 +86,36 @@ img {
 }
 
 .buttons {
-    margin-top: 2rem;
     display: flex;
-    gap: 1rem;
     justify-content: center;
-    flex-wrap: wrap;
-    flex-direction: row; /* Ensure side-by-side layout */
+    align-items: center;
+    gap: 1rem; /* spacing between buttons */
+    flex-wrap: wrap; /* wrap on smaller screens instead of overlapping */
+    margin-top: 2rem;
     width: 100%;
+    padding: 0 1rem; /* prevent edge collisions */
+    box-sizing: border-box;
 }
 
-@media (max-width: 768px) {
-    .buttons {
-        justify-content: center;
-        gap: 0.75rem;
-    }
+.buttons a {
+    flex: 1 1 auto;
+    max-width: 200px; /* ensures buttons don't grow too wide */
 }
-
 
 button {
+    width: 100%;
     padding: 0.75rem 1.5rem;
     font-size: 1rem;
     border-radius: 10px;
     border: none;
-    background-color: transparent;
-    color: #ffffff;
+    color: #fff;
+    transition: transform 0.2s ease-in-out;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 250px;
+    white-space: nowrap;
 }
 
 button:hover {
     transform: scale(1.05);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
 .btn {
