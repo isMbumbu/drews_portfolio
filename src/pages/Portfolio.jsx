@@ -21,6 +21,18 @@ function Portfolio() {
           <h3>Gym Buddy</h3>
           <p>Helps gym owners, trainers, and members manage fitness routines and schedules.</p>
         </div>
+        <div className="portfolio-item">
+          <a href="https://agrimmerce-1.onrender.com/" target="_blank" rel="noopener noreferrer">
+            <img 
+              src="agrimmerce.png" 
+              alt="Agrimmerce Website Preview"
+              className="portfolio-image"
+            />
+          </a>
+          <h3>Agrimmerce</h3>
+          <p>A Software as a Solution for local farmers to be able to post their available products online</p>
+        </div>
+        
           
 {/*         <div className="portfolio-item">
           <a href="https://anylawfirm.netlify.app" target="_blank" rel="noopener noreferrer">
