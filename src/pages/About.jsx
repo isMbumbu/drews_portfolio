@@ -36,15 +36,9 @@ function About() {
               <li><SiFlask title="Flask" /> Flask</li>
               <li><SiPostgresql title="PostgreSQL" /> PostgreSQL</li>
               <li><SiMongodb title="MongoDB" /> MongoDB</li>
-              <li><FaNetworkWired title="Networking & Cybersecurity" /> Networking & Cybersecurity</li>
               <li><SiFastapi title="FastAPI" /> FastAPI</li>
               <li><SiKubernetes title="Kubernetes" /> Kubernetes</li>
               <li><FaDocker title="Docker" /> Docker</li>
-              <li><FaGitAlt title="Git" /> Git</li>
-              <li><SiGithub title="GitHub" /> GitHub</li>
-              <li><MdOutlineApi title="RESTful APIs" /> RESTful APIs</li>
-              <li><SiCypress title="CI/CD Pipelines" /> CI/CD Pipelines</li>
-              <li><FaPeopleArrows title="Agile/Scrum" /> Agile/Scrum</li>
             </ul>
         </div>
         <div className="about-education">
