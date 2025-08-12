@@ -5,7 +5,7 @@ import floatingImage from '/home-removebg-preview.png'
 
 function HomeC() {
   const [text, setText] = useState('');
-  const fullText = "Hello, My name is AMBUKA. I am a Computer Scientist and a FULL-STACK DEVELOPER.";
+  const fullText = "I’m Ambuka — a Computer Scientist and Software Engineer passionate about building full-stack solutions, leveraging cloud technologies, and advancing in AI to deliver innovative, high-impact results.";
   const speed = 80;
 
   useEffect(() => {
