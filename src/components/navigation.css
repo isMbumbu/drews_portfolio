@@ -1,7 +1,7 @@
 /* Navbar Styles */
 .navbar {
     padding: 0.8rem 2rem;
-    background-color: var(--bg-darker) !important;
+    background: linear-gradient(90deg, var(--bg-darker) 70%, var(--bg-dark) 100%) !important;
     border-bottom: 1px solid var(--border-color);
     position: fixed;
     width: 100%;
@@ -150,7 +150,7 @@
     .navbar-nav {
         align-items: flex-start;
         padding: 1rem;
-        background-color: rgba(18, 18, 18, 0.95);
+        background: linear-gradient(90deg, var(--bg-darker) 80%, var(--bg-dark) 100%);
         border-radius: 0 0 10px 10px;
         margin-top: 0.5rem;
         border: 1px solid var(--border-color);
