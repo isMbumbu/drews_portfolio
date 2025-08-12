@@ -1,32 +1,59 @@
-
 .contact-page {
-  background: url('/public/tai-bui-TfBEx6sknq0-unsplash.jpg') no-repeat center center/cover;
+  background: linear-gradient(rgba(10, 10, 10, 0.9), rgba(10, 10, 10, 0.9)), 
+              url('/public/tai-bui-TfBEx6sknq0-unsplash.jpg') no-repeat center center/cover;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Add tech-inspired grid overlay */
+.contact-page::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(rgba(58, 134, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(58, 134, 255, 0.05) 1px, transparent 1px);
+  background-size: 30px 30px;
+  pointer-events: none;
 }
 
 .contact-me {
   text-align: center;
   padding: 4rem 2rem;
-  background: rgba(31, 31, 31, 0.9);
-  color: #ffffff;
-  border-radius: 12px;
+  background: rgba(18, 18, 18, 0.95);
+  color: var(--text-primary);
+  border-radius: 16px;
   margin: 50px auto;
   max-width: 800px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3),
+              0 0 0 1px rgba(58, 134, 255, 0.1),
+              0 0 30px rgba(58, 134, 255, 0.1);
+  position: relative;
+  z-index: 1;
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(5px);
 }
 
 .contact-me h2 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
   font-weight: 700;
+  color: var(--accent-color);
+  text-shadow: 0 0 10px rgba(58, 134, 255, 0.3);
 }
 
 .contact-me p {
   font-size: 1.2rem;
   margin-bottom: 2rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
 }
 
 .contact-links {
@@ -34,51 +61,101 @@
   justify-content: center;
   gap: 1.5rem;
   flex-wrap: wrap;
+  margin: 2rem 0;
 }
 
 .contact-link {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  background: #ff7f50;
-  color: #ffffff;
-  padding: 0.75rem 1.5rem;
+  gap: 0.75rem;
+  background: var(--bg-darker);
+  color: white;
+  padding: 1rem 2rem;
   border-radius: 50px;
   font-size: 1rem;
   font-weight: 500;
   text-decoration: none;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Glow effect on hover */
+.contact-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(58, 134, 255, 0.2), transparent);
+  transition: 0.5s;
+}
+
+.contact-link:hover::before {
+  left: 100%;
 }
 
 .contact-link:hover {
-  transform: scale(1.1);
-  box-shadow: 0 5px 15px rgba(255, 127, 80, 0.4);
-}
-
-.linkedin {
-  background: #0077b5;
-}
-
-.github {
-  background: #333333;
-}
-
-.whatsapp {
-  background: #25d366;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2),
+              0 0 15px rgba(58, 134, 255, 0.3);
 }
 
 .contact-link i {
   font-size: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.contact-link:hover i {
+  transform: scale(1.2);
+}
+
+/* Platform-specific colors with tech twist */
+.linkedin {
+  background: linear-gradient(135deg, #0077b5 0%, #004471 100%);
+}
+
+.github {
+  background: linear-gradient(135deg, #333333 0%, #000000 100%);
+}
+
+.whatsapp {
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
 }
 
 .tagline {
   margin-top: 3rem;
   font-style: italic;
   font-size: 1.2rem;
-  color: #ff7f50;
+  color: var(--accent-color);
+  position: relative;
+  display: inline-block;
+}
+
+/* Animated cursor effect */
+.tagline::after {
+  content: '|';
+  position: absolute;
+  right: -10px;
+  bottom: 0;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 @media (max-width: 768px) {
+  .contact-me {
+    padding: 3rem 1.5rem;
+    margin: 30px 20px;
+    border-radius: 12px;
+  }
+
   .contact-me h2 {
     font-size: 2rem;
   }
@@ -87,4 +164,28 @@
     flex-direction: column;
     gap: 1rem;
   }
+
+  .contact-link {
+    padding: 0.9rem 1.5rem;
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Floating tech elements animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.contact-link {
+  animation: float 4s ease-in-out infinite;
+}
+
+.contact-link:nth-child(2) {
+  animation-delay: 0.5s;
+}
+
+.contact-link:nth-child(3) {
+  animation-delay: 1s;
 }
