@@ -8,38 +8,39 @@ const services = [
   {
     id: 1,
     icon: <FaCode />,
-    title: 'Professional Code',
-    description: 'As a programmer my goal is to always scale up with every project done, write clean and simple code, and be creative while at it.'
+    title: 'Full-Stack Development',
+    description: 'I build scalable web applications using FastAPI, React, PostgreSQL, and Docker, with clean, maintainable, and production-ready code.'
   },
   {
     id: 2,
     icon: <FaLightbulb />,
-    title: 'Creative Ideas',
-    description: 'I am fueled by my passion for understanding cross-cultural technology practices which gives a good footing for creativity.'
+    title: 'Cloud & DevOps',
+    description: 'I work with Kubernetes, containerization, and CI/CD pipelines to deploy reliable and efficient systems.'
   },
   {
     id: 3,
     icon: <FaChartLine />,
-    title: 'SEO & Marketing',
-    description: 'I stay in tune with the latest technology innovations and strategies through continued coursework and professional development.'
+    title: 'AI & Data Solutions',
+    description: 'I integrate AI models and data-driven solutions into applications, leveraging modern tools and APIs to create intelligent features.'
   }
 ];
 
 function Services() {
-  return (<>
-    <Navigation />
-    <section className="services-section"style={{ backgroundImage: `url(${background})` }}>
-      <h2 className="section-title">What I Do</h2>
-      <div className="services-container">
-        {services.map(service => (
-          <div key={service.id} className="service-card">
-            <div className="service-icon">{service.icon}</div>
-            <h3>{service.title}</h3>
-            <p>{service.description}</p>
-          </div>
-        ))}
-      </div>
-    </section>
+  return (
+    <>
+      <Navigation />
+      <section className="services-section" style={{ backgroundImage: `url(${background})` }}>
+        <h2 className="section-title">What I Do</h2>
+        <div className="services-container">
+          {services.map(service => (
+            <div key={service.id} className="service-card">
+              <div className="service-icon">{service.icon}</div>
+              <h3>{service.title}</h3>
+              <p>{service.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
     </>
   );
 }
