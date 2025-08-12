@@ -23,7 +23,7 @@ function Portfolio() {
           <p>Helps gym owners, trainers, and members manage fitness routines and schedules.</p>
           <div className="portfolio-buttons">
             <a href="https://gyyym.netlify.app/" target="_blank" rel="noopener noreferrer" className="custom-btn portfolio-btn">Live Demo</a>
-            <a href="https://github.com/isMbumbu/GymBuddy" target="_blank" rel="noopener noreferrer" className="custom-btn portfolio-btn">GitHub</a>
+            <a href="https://github.com/isMbumbu/simple-gymbuddy" target="_blank" rel="noopener noreferrer" className="custom-btn portfolio-btn">GitHub</a>
           </div>
         </div>
         <div className="portfolio-item">
@@ -68,7 +68,7 @@ function Portfolio() {
           <p>A Software enabling Empowering lawyers and clients with seamless communication and efficient case management.</p>
           <div className="portfolio-buttons">
             <a href="https://anylawfirm.netlify.app/" target="_blank" rel="noopener noreferrer" className="custom-btn portfolio-btn">Live Demo</a>
-            <a href="https://github.com/isMbumbu/anylawfirm" target="_blank" rel="noopener noreferrer" className="custom-btn portfolio-btn">GitHub</a>
+            <a href="https://github.com/isMbumbu/newfirm-backend" target="_blank" rel="noopener noreferrer" className="custom-btn portfolio-btn">GitHub</a>
           </div>
         </div>
           
