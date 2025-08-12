@@ -17,11 +17,12 @@ function About() {
       <div className="about-container">
         <div className="about-content">
           <p>
-            I am a passionate full-stack developer specializing in web and mobile applications.
-            My expertise spans technologies like <strong>React, React Native, Node.js, Flask, PostgreSQL, and MongoDB</strong>.
-            With a strong foundation in <strong>object-oriented programming (OOP)</strong> using Python and Java,
-            I build scalable, efficient, and user-friendly software solutions.
+            I’m a dedicated full-stack developer with a passion for crafting impactful web and mobile applications. 
+            My toolkit includes <strong>React, React Native, Node.js, Flask, PostgreSQL, and MongoDB</strong>, 
+            backed by a strong foundation in <strong>object-oriented programming (OOP)</strong> with Python and Java. 
+            I thrive on building scalable, efficient, and intuitive solutions that deliver real value to users.
           </p>
+
         </div>
 
         <div className="about-skills">
