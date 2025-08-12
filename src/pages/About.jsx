@@ -1,8 +1,14 @@
 import { useEffect, useState } from 'react';
 import Navigation from '../components/Navigation';
 import '../components/about.css';
-import { FaJs, FaPython, FaJava, FaReact, FaNodeJs, FaDatabase, FaNetworkWired } from 'react-icons/fa';
-import { SiSpringboot, SiFlask, SiMongodb, SiPostgresql } from 'react-icons/si';
+import { 
+  FaJs, FaPython, FaJava, FaReact, FaNodeJs, FaNetworkWired, FaDocker, FaGitAlt 
+} from 'react-icons/fa';
+import { 
+  SiSpringboot, SiFlask, SiPostgresql, SiMongodb, SiFastapi, SiKubernetes, SiGithub, SiCypress 
+} from 'react-icons/si';
+import { MdOutlineApi } from 'react-icons/md';
+import { FaPeopleArrows } from 'react-icons/fa';
 
 function About() {
   return (
@@ -31,6 +37,14 @@ function About() {
               <li><SiPostgresql title="PostgreSQL" /> PostgreSQL</li>
               <li><SiMongodb title="MongoDB" /> MongoDB</li>
               <li><FaNetworkWired title="Networking & Cybersecurity" /> Networking & Cybersecurity</li>
+              <li><SiFastapi title="FastAPI" /> FastAPI</li>
+              <li><SiKubernetes title="Kubernetes" /> Kubernetes</li>
+              <li><FaDocker title="Docker" /> Docker</li>
+              <li><FaGitAlt title="Git" /> Git</li>
+              <li><SiGithub title="GitHub" /> GitHub</li>
+              <li><MdOutlineApi title="RESTful APIs" /> RESTful APIs</li>
+              <li><SiCypress title="CI/CD Pipelines" /> CI/CD Pipelines</li>
+              <li><FaPeopleArrows title="Agile/Scrum" /> Agile/Scrum</li>
             </ul>
         </div>
         <div className="about-education">
