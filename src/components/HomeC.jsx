@@ -45,7 +45,7 @@ function HomeC() {
   return (
     <div className='home container-fluid container-sm fade-slide'>
       <div className="intro">
-        <h3 className='dynamic-text'>{text}</h3>
+  <h3 className='dynamic-text styled-intro-text'>{text}</h3>
        <div className="buttons">
   <a 
     href="/resume.pdf" 
