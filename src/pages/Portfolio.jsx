@@ -10,7 +10,7 @@ const projects = [
     category: 'FINTECH / AGRI-TECH',
     description: 'A multi-tenant payment and supply chain system integrated with M-Pesa.',
     tech: ['FASTAPI', 'POSTGRESQL', 'CELERY', 'REDIS'],
-    link: 'https://github.com/isMbumbu',
+    link: 'https://sokopayadmin.sokolink.co.ke/',
     img: 'sokopay.png' // Use your actual image paths
   },
   {
@@ -28,7 +28,7 @@ const projects = [
     category: 'FINANCIAL TOOLS',
     description: 'Budgeting app with SMS transaction ingestion and expense tracking.',
     tech: ['REACT NATIVE', 'PYTHON', 'PYDANTIC'],
-    link: 'https://github.com/isMbumbu',
+    link: 'https://github.com/isMbumbu/AkibaFlow',
     img: 'akibaflow.png'
   },
   {
