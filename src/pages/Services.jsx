@@ -1,47 +1,73 @@
 import React from 'react';
-import '../components/services.css';
-import { FaCode, FaLightbulb, FaChartLine } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 import Navigation from '../components/Navigation';
-import background from '/services.jpg';
+import './services.css';
 
 const services = [
   {
-    id: 1,
-    icon: <FaCode />,
+    id: '01',
     title: 'Full-Stack Development',
-    description: 'I build scalable web applications using FastAPI, React, PostgreSQL, and Docker, with clean, maintainable, and production-ready code.'
+    tags: ['FASTAPI', 'REACT', 'POSTGRESQL', 'DOCKER'],
+    description: 'Architecting scalable backend systems and responsive frontend interfaces with a focus on clean, multi-tenant architecture.'
   },
   {
-    id: 2,
-    icon: <FaLightbulb />,
+    id: '02',
     title: 'Cloud & DevOps',
-    description: 'I work with Kubernetes, containerization, and CI/CD pipelines to deploy reliable and efficient systems.'
+    tags: ['KUBERNETES', 'CI/CD', 'AWS', 'REDIS'],
+    description: 'Streamlining deployment pipelines and managing containerized environments to ensure 99.9% system reliability.'
   },
   {
-    id: 3,
-    icon: <FaChartLine />,
+    id: '03',
     title: 'AI & Data Solutions',
-    description: 'I integrate AI models and data-driven solutions into applications, leveraging modern tools and APIs to create intelligent features.'
+    tags: ['LLM INTEGRATION', 'DATA PIPELINES', 'API OPTIMIZATION'],
+    description: 'Leveraging modern AI frameworks to build intelligent features and optimize data processing at scale.'
   }
 ];
 
 function Services() {
   return (
-    <>
+    <main className="svc-root">
       <Navigation />
-      <section className="services-section" style={{ backgroundImage: `url(${background})` }}>
-        <h2 className="section-title">What I Do</h2>
-        <div className="services-container">
-          {services.map(service => (
-            <div key={service.id} className="service-card">
-              <div className="service-icon">{service.icon}</div>
-              <h3>{service.title}</h3>
-              <p>{service.description}</p>
-            </div>
+      
+      {/* Decorative vertical rail */}
+      <aside className="svc-rail">
+        <span className="svc-rail-text">CORE CAPABILITIES — AMBUKA</span>
+      </aside>
+
+      <section className="svc-container">
+        <header className="svc-header">
+          <span className="svc-meta">SPECIALIZATIONS</span>
+          <h1 className="svc-main-title">Expertise & <em>Solutions</em></h1>
+        </header>
+
+        <div className="svc-list">
+          {services.map((svc) => (
+            <motion.div 
+              key={svc.id} 
+              className="svc-row"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="svc-row-id">{svc.id}</div>
+              
+              <div className="svc-row-content">
+                <div className="svc-row-top">
+                  <h3 className="svc-row-title">{svc.title}</h3>
+                  <div className="svc-row-tags">
+                    {svc.tags.map(tag => <span key={tag}>{tag}</span>)}
+                  </div>
+                </div>
+                <p className="svc-row-desc">{svc.description}</p>
+              </div>
+
+              <div className="svc-row-arrow">↗</div>
+            </motion.div>
           ))}
         </div>
       </section>
-    </>
+    </main>
   );
 }
 
