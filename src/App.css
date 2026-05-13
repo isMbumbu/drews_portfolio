@@ -146,3 +146,26 @@
     margin: 1.5rem;
   }
 }
+
+/* Add to your existing CSS */
+
+@media (pointer: fine) {
+  /* Hide the system cursor to let the custom one shine */
+  body, #root, a, button, input, textarea {
+    cursor: none !important;
+  }
+}
+
+/* Ensure the custom cursor is always on top of your grid and cards */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  background-color: white;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  mix-blend-mode: difference; /* Highly recommended for your dark theme */
+}
