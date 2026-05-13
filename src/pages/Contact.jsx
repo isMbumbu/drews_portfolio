@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Navigation from '../components/Navigation';
-import './contact.css';
+import '../components/contact.css';
 
 function Contact() {
   const [status, setStatus] = useState("");

@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Navigation from '../components/Navigation';
-import './portfolio.css';
+import '../components/portfolio.css';
 
 const projects = [
   {
@@ -48,7 +48,16 @@ const projects = [
     tech: ['DJANGO', 'POSTGRESQL', 'BOOTSTRAP'],
     link: 'https://anylawfirm.netlify.app/',
     img: 'advocates.png'
-  }
+  },
+  {
+  id: '06',
+  title: 'Inventory Archive',
+  category: 'DISTRIBUTED SYSTEMS',
+  description: 'Multi-tenant infrastructure for tracking asset lifecycles and inter-departmental transfers across agricultural value chains.',
+  tech: ['FASTAPI', 'REACT', 'POSTGRESQL', 'DOCKER'],
+  link: 'https://inventory.sokolink.co.ke/',
+  img: 'inventory.png' // Ensure this matches your asset naming convention
+},
 ];
 
 function Portfolio() {

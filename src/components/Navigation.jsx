@@ -7,7 +7,7 @@ function Navigation() {
   const location = useLocation();
 
   const navItems = [
-    { name: 'INDEX', path: '/' },
+    { name: 'HOME', path: '/' },
     { name: 'ABOUT', path: '/about' },
     { name: 'WORKS', path: '/portfolio' },
     { name: 'SERVICES', path: '/services' },

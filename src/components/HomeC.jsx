@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import './home.css';
+import '../components/home.css';
 import floatingImage from '/home-removebg-preview.png';
 
 function HomeC() {
   const [text, setText] = useState('');
-  const fullText = "I’m Ambuka — a Computer Scientist and Software Engineer passionate about building full-stack solutions, leveraging cloud technologies, and advancing in AI.";
+  const fullText = "Full Stack Software Engineer turning ideas into scalable apps, APIs, and business systems — powered by Python, React, cloud-native tools, and a growing obsession with system design, AI, and building things that actually make people’s work easier.";
   const speed = 40; // Faster speed for a snappier, premium feel
 
   useEffect(() => {

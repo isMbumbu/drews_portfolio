@@ -4,28 +4,34 @@ import './footer.css';
 
 function Footer() {
   return (
-    <footer className='footer bg-secondary text-center'>
-      <div className='container'>
-        <p className='footer-text'>© {new Date().getFullYear()} Andrew Ambuka. All Rights Reserved.</p>
-        
-        <div className='footer-links'>
-          <span className='divider'>|</span>
-          <Link to='/contact' className='footer-link'>Contact Me</Link>
+    <footer className="ambuka-footer">
+      <div className="footer-container">
+        {/* Top Section: Navigation and Socials in one sleek row */}
+        <div className="footer-top">
+          <div className="footer-brand">
+            <Link to="/" className="f-logo">AMBUKA<span>.</span></Link>
+            <p className="f-tagline">Architecting Scalable Solutions</p>
+          </div>
+
+          <div className="footer-nav-group">
+             <span className="f-label">SOCIALS</span>
+             <div className="f-links">
+               <a href="https://linkedin.com/in/andrew-ambuka-9582152b0/" target="_blank" rel="noopener noreferrer">LN</a>
+               <a href="https://github.com/isMbumbu" target="_blank" rel="noopener noreferrer">GH</a>
+               <a href="https://wa.me/0785592231" target="_blank" rel="noopener noreferrer">WA</a>
+             </div>
+          </div>
         </div>
 
-        <div className='social-icons'>
-          <a href='https://www.linkedin.com/in/andrewambuka' target='_blank' rel='noopener noreferrer'>
-            <i className='fab fa-linkedin'></i>
-          </a>
-          <a href='https://github.com/AndrewAmbuka' target='_blank' rel='noopener noreferrer'>
-            <i className='fab fa-github'></i>
-          </a>
-          <a href='https://wa.me/yourwhatsappnumber' target='_blank' rel='noopener noreferrer'>
-            <i className='fab fa-whatsapp'></i>
-          </a>
+        {/* Bottom Section: Legal and Timestamp */}
+        <div className="footer-bottom">
+          <p className="f-copyright">
+            © {new Date().getFullYear()} — NAIROBI, KENYA
+          </p>
+          <div className="f-legal">
+            <span>DEVELOPED WITH PRECISION</span>
+          </div>
         </div>
-
-        <p className='signature'>Crafted with 🔥 by Andrew Ambuka</p>
       </div>
     </footer>
   );

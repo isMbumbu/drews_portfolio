@@ -7,7 +7,7 @@ import {
 import { 
   SiSpringboot, SiFlask, SiPostgresql, SiMongodb, SiFastapi, SiKubernetes 
 } from 'react-icons/si';
-import './about.css';
+import '../components/about.css';
 
 function About() {
   const skills = [
