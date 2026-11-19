@@ -64,7 +64,7 @@ function App() {
           <div className="hero-actions"><a className="button button-primary" href="#work">Explore selected work <ArrowDown size={16} /></a><a className="text-link" href="/resume.pdf" download>Download CV <ArrowUpRight size={16} /></a></div>
           <div className="social-links"><a href="https://github.com/isMbumbu" target="_blank" rel="noreferrer"><FaGithub size={16} /> GitHub <ArrowUpRight size={13} /></a><a href="https://linkedin.com/in/andrew-ambuka-9582152b0/" target="_blank" rel="noreferrer"><FaLinkedin size={16} /> LinkedIn <ArrowUpRight size={13} /></a><a href="mailto:andrewambuka9@gmail.com"><Mail size={16} /> Email <ArrowUpRight size={13} /></a></div>
         </div>
-        <div className="hero-visual" aria-label="Portrait of Andrew Ambuka"><div className="portrait-frame"><img src="/home-removebg-preview.png" alt="Andrew Ambuka" fetchPriority="high" /></div><div className="visual-note"><span>01 / ENGINEERING</span><span>Thoughtful by design.</span></div><div className="visual-index">AA<br />—<br />26</div></div>
+        <div className="hero-visual" aria-label="Portrait of Andrew Ambuka"><div className="portrait-hanging"><span className="portrait-chain chain-left" /><span className="portrait-chain chain-right" /><div className="portrait-frame"><img src="/home-removebg-preview.png" alt="Andrew Ambuka" fetchPriority="high" /></div></div></div>
         <div className="hero-bottom"><span>SOFTWARE THAT MOVES WORK FORWARD</span><a href="#work">SCROLL TO EXPLORE <ArrowDown size={13} /></a></div>
       </section>
 
