@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import Navigation from '../components/Navigation'
 import HomeC from '../components/HomeC'
 import About from './About'

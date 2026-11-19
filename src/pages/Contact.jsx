@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Navigation from '../components/Navigation';
 import '../components/contact.css';
@@ -46,7 +46,7 @@ function Contact() {
             </p>
             <p className="cnt-subtext">
               Fill out the form, and I’ll get back to you within 24 hours. 
-              Let's turn your vision into scalable architecture.
+              Let&apos;s turn your vision into scalable architecture.
             </p>
           </div>
 
@@ -78,7 +78,7 @@ function Contact() {
             </button>
             
             {status === "ERROR" && <p className="error-msg">Something went wrong. Please try again.</p>}
-            {status === "SUCCESS" && <p className="success-msg">Thanks! I'll be in touch soon.</p>}
+            {status === "SUCCESS" && <p className="success-msg">Thanks! I&apos;ll be in touch soon.</p>}
           </motion.form>
         </div>
       </section>
