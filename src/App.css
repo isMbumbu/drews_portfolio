@@ -21,3 +21,12 @@
 .portrait-chain:after{content:'';position:absolute;bottom:-3px;left:3px;width:6px;height:6px;border:1px solid #879779;border-radius:50%;background:#202820}
 @keyframes portrait-drop{0%{transform:translateY(-115px) rotate(-2deg);opacity:0}68%{transform:translateY(5px) rotate(.5deg);opacity:1}82%{transform:translateY(-3px) rotate(-.25deg)}100%{transform:translateY(0) rotate(0)}}
 @media(max-width:600px){.hero-visual{height:400px}.portrait-frame{top:55px;left:10px}.portrait-chain{height:67px}.chain-left{left:calc(50% - 62px)}.chain-right{right:calc(50% - 62px)}}
+
+/* Editorial portrait treatment: a clean crop with a quiet offset backing disc. */
+.portrait-chain{display:none}
+.portrait-hanging:before{content:'';position:absolute;top:48px;left:25px;width:min(370px,calc(100% - 30px));aspect-ratio:1;border-radius:50%;background:#192119;border:1px solid #344032;transform:rotate(7deg);box-shadow:0 20px 55px rgba(0,0,0,.18)}
+.portrait-frame{z-index:1;box-shadow:0 0 0 7px rgba(255,255,255,.018),0 24px 60px rgba(0,0,0,.22)}
+.portrait-frame img{transform:scale(1.025)}
+.cv-download{color:var(--subtle);font-size:12px}
+.cv-download:hover{color:var(--green)}
+@media(max-width:600px){.portrait-hanging:before{top:48px;left:20px;width:min(310px,calc(100% - 20px))}.hero-actions{column-gap:17px;row-gap:13px}.cv-download{flex-basis:100%;margin-left:2px}}
