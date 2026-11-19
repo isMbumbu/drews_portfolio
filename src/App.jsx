@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ArrowDown, ArrowRight, ArrowUpRight, Check, Code2, Download, Mail, Menu, X } from 'lucide-react'
 import { FaGithub, FaLinkedin } from 'react-icons/fa'
 import './App.css'
@@ -30,6 +30,22 @@ const skills = [
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [status, setStatus] = useState('')
+  useEffect(() => {
+    const targets = document.querySelectorAll('.section-heading, .project-row, .timeline-item, .about-intro, .about-copy, .skill-row, .ai-content > div, .education-grid article, .contact-copy, .contact-form')
+    if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    targets.forEach((target) => target.classList.add('scroll-reveal'))
+    const observer = new IntersectionObserver((entries, currentObserver) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return
+        entry.target.classList.add('is-visible')
+        currentObserver.unobserve(entry.target)
+      })
+    }, { threshold: 0.12, rootMargin: '0px 0px -45px 0px' })
+
+    targets.forEach((target) => observer.observe(target))
+    return () => observer.disconnect()
+  }, [])
   const closeMenu = () => setMenuOpen(false)
 
   async function submitContact(event) {
