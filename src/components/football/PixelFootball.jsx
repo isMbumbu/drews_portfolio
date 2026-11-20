@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Volume2, VolumeX } from 'lucide-react'
+import { createPortal } from 'react-dom'
+import { ArrowLeft, ArrowRight, ArrowUp, Volume2, VolumeX, X } from 'lucide-react'
 import { FootballGame, WIN_SCORE, emptyControls } from './engine'
 import { sound } from './Sound'
 import './pixel-football.css'
 
 const STEP_MS = 1000 / 60
 
-function PixelFootball() {
+function PixelFootball({ onClose }) {
+  const screenRef = useRef(null)
   const wrapRef = useRef(null)
   const canvasRef = useRef(null)
   const gameRef = useRef(null)
@@ -14,10 +16,28 @@ function PixelFootball() {
   const lastUi = useRef('')
   const [ui, setUi] = useState({ phase: 'ready', left: 0, right: 0, winner: null })
   const [muted, setMuted] = useState(sound.muted)
+  const onCloseRef = useRef(onClose)
+  onCloseRef.current = onClose
+
+  useEffect(() => {
+    const oldBodyOverflow = document.body.style.overflow
+    const oldHtmlOverflow = document.documentElement.style.overflow
+    document.body.style.overflow = 'hidden'
+    document.documentElement.style.overflow = 'hidden'
+    wrapRef.current?.focus()
+    const onEscape = (event) => { if (event.key === 'Escape') onCloseRef.current() }
+    window.addEventListener('keydown', onEscape)
+    return () => {
+      document.body.style.overflow = oldBodyOverflow
+      document.documentElement.style.overflow = oldHtmlOverflow
+      window.removeEventListener('keydown', onEscape)
+    }
+  }, [])
 
   const start = useCallback(() => {
     sound.unlock()
     gameRef.current?.start()
+    wrapRef.current?.focus()
   }, [])
 
   useEffect(() => {
@@ -73,6 +93,7 @@ function PixelFootball() {
     }
 
     build()
+    wrap.focus()
     raf = requestAnimationFrame(frame)
     const resize = new ResizeObserver(build)
     resize.observe(wrap)
@@ -94,8 +115,9 @@ function PixelFootball() {
   useEffect(() => {
     const keyMap = { ArrowLeft: 'left', a: 'left', ArrowRight: 'right', d: 'right', ArrowUp: 'jump', w: 'jump', ' ': 'kick', x: 'kick', k: 'kick' }
     const down = (event) => {
-      if (!wrapRef.current?.contains(document.activeElement)) return
-      if (event.key === 'Enter' && (ui.phase === 'ready' || ui.phase === 'over')) { start(); return }
+      if (!screenRef.current?.contains(document.activeElement)) return
+      if (event.target instanceof Element && event.target.closest('button')) return
+      if ((event.key === 'Enter' || event.key === ' ') && (ui.phase === 'ready' || ui.phase === 'over')) { event.preventDefault(); start(); return }
       const key = keyMap[event.key] || keyMap[event.key.toLowerCase()]
       if (!key) return
       event.preventDefault()
@@ -133,26 +155,26 @@ function PixelFootball() {
   const release = (key) => () => { controls.current[key] = false }
   const over = ui.phase === 'over'
 
-  return (
-    <section className="football-section" id="football">
-      <div className="section-wrap">
-        <div className="football-heading">
-          <div>
-            <span className="section-kicker">A LITTLE FRIENDLY COMPETITION</span>
-            <h2>Pixel <em>Football.</em></h2>
-          </div>
-          <button className="football-sound" type="button" onClick={toggleSound} aria-label={muted ? 'Turn game sound on' : 'Turn game sound off'}>
-            {muted ? <VolumeX size={15} /> : <Volume2 size={15} />}{muted ? 'SOUND OFF' : 'SOUND ON'}
+  return createPortal(
+    <div className="football-screen" ref={screenRef} role="dialog" aria-modal="true" aria-label="Pixel football game">
+      <div className="football-topbar">
+        <a className="football-brand" href="#home" onClick={(event) => { event.preventDefault(); onClose() }}>AA<span>.</span></a>
+        <div className="football-top-label"><span className="football-live-dot" /> PIXEL FOOTBALL <i>·</i> FIRST TO {WIN_SCORE}</div>
+        <div className="football-top-actions">
+          <button className="football-icon-button" type="button" onClick={toggleSound} aria-label={muted ? 'Turn game sound on' : 'Turn game sound off'}>
+            {muted ? <VolumeX size={17} /> : <Volume2 size={17} />}
           </button>
+          <button className="football-icon-button football-close" type="button" onClick={onClose} aria-label="Close football game"><X size={18} /></button>
         </div>
-
-        <div className="football-game" ref={wrapRef} tabIndex={0} aria-label="Pixel football game" onPointerDown={(event) => { if (event.target === event.currentTarget || event.target === canvasRef.current) event.currentTarget.focus() }}>
+      </div>
+      <div className="football-playfield" tabIndex={0} aria-label="Football match. Use the arrow keys or A and D to move, up or W to jump, and space or X to kick." onPointerDown={(event) => { if (event.target === event.currentTarget || event.target === canvasRef.current) event.currentTarget.focus() }}>
+        <div className="football-game">
           <div className="football-scorebar">
             <span><i className="football-dot player-dot" /> YOU <b>{ui.left}</b></span>
             <span className="football-match-state">{ui.phase === 'play' || ui.phase === 'goal' ? 'MATCH IN PROGRESS' : `FIRST TO ${WIN_SCORE}`}</span>
             <span><b>{ui.right}</b> CPU <i className="football-dot cpu-dot" /></span>
           </div>
-          <div className="football-pitch-wrap">
+          <div className="football-pitch-wrap" ref={wrapRef} tabIndex={-1}>
             <canvas ref={canvasRef} className="football-canvas" role="img" aria-label="Pixel football match. Use arrow keys or A and D to move, up or W to jump, and space or X to kick." />
             {(ui.phase === 'ready' || over) && (
               <div className="football-overlay" key={ui.phase}>
@@ -180,7 +202,8 @@ function PixelFootball() {
           <div className="football-footnote">Use ← → or A D to move · ↑ or W to jump · Space or X to kick</div>
         </div>
       </div>
-    </section>
+    </div>,
+    document.body,
   )
 }
 

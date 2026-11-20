@@ -15,6 +15,9 @@
 @media(prefers-reduced-motion:reduce){.scroll-reveal{opacity:1;transform:none;transition:none}}
 .role-rotate{position:relative;display:inline-block;width:9.8em;height:1.3em;overflow:hidden;vertical-align:bottom;color:var(--green)}
 .role-rotate>span{position:absolute;left:0;top:0;white-space:nowrap}
+.hero-actions{flex-wrap:wrap}
+.button-game{padding:14px 16px;background:var(--green);color:#141810;border:1px solid var(--green);cursor:pointer}
+.button-game:hover{background:#c9e994;transform:translateY(-2px)}
 
 /* Keep the hero portrait simple and circular. */
 .hero-visual{width:min(100%,400px);height:400px}

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ArrowDown, ArrowRight, ArrowUpRight, Check, Code2, Download, Mail, Menu, X } from 'lucide-react'
+import { ArrowDown, ArrowRight, ArrowUpRight, Check, Code2, Download, Gamepad2, Mail, Menu, X } from 'lucide-react'
 import { FaGithub, FaLinkedin } from 'react-icons/fa'
 import PixelFootball from './components/football/PixelFootball'
 import './App.css'
@@ -35,6 +35,7 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [status, setStatus] = useState('')
   const [roleIndex, setRoleIndex] = useState(0)
+  const [footballOpen, setFootballOpen] = useState(false)
   useEffect(() => {
     const targets = document.querySelectorAll('.section-heading, .project-row, .timeline-item, .about-intro, .about-copy, .skill-row, .ai-content > div, .education-grid article, .contact-copy, .contact-form, .football-heading, .football-game')
     if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
@@ -74,6 +75,7 @@ function App() {
   }
 
   return <>
+    {footballOpen && <PixelFootball onClose={() => setFootballOpen(false)} />}
     <header className="site-header">
       <a className="wordmark" href="#home" onClick={closeMenu}>AA<span>.</span></a>
       <button className="menu-button" aria-label={menuOpen ? 'Close navigation' : 'Open navigation'} aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X /> : <Menu />}</button>
@@ -90,7 +92,7 @@ function App() {
           <h1>Building intelligent<br />software for the <em>real world.</em></h1>
           <p className="hero-role">Full-Stack Software Engineer <span>·</span> <span className="role-rotate"><AnimatePresence mode="wait" initial={false}><motion.span key={rotatingRoles[roleIndex]} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}>{rotatingRoles[roleIndex]}</motion.span></AnimatePresence></span></p>
           <p className="hero-description">I’m Andrew Ambuka. I build production software across APIs, payment workflows, integrations and user-facing applications. Now I’m extending that foundation into applied AI.</p>
-        <div className="hero-actions"><a className="button button-primary" href="#work">Explore selected work <ArrowDown size={16} /></a><a className="text-link" href="https://www.isoi-photography.co.ke/" target="_blank" rel="noreferrer">Visit Isoi Photography <ArrowUpRight size={16} /></a><a className="text-link" href="/resume.pdf" target="_blank" rel="noreferrer">View CV <ArrowUpRight size={16} /></a><a className="text-link cv-download" href="/resume.pdf" download>Download CV <Download size={15} /></a></div>
+        <div className="hero-actions"><button className="button button-game" type="button" onClick={() => setFootballOpen(true)}><Gamepad2 size={17} /> Play Pixel Football <ArrowRight size={15} /></button><a className="button button-primary" href="#work">Explore selected work <ArrowDown size={16} /></a><a className="text-link" href="https://www.isoi-photography.co.ke/" target="_blank" rel="noreferrer">Visit Isoi Photography <ArrowUpRight size={16} /></a><a className="text-link" href="/resume.pdf" target="_blank" rel="noreferrer">View CV <ArrowUpRight size={16} /></a><a className="text-link cv-download" href="/resume.pdf" download>Download CV <Download size={15} /></a></div>
           <div className="social-links"><a href="https://github.com/isMbumbu" target="_blank" rel="noreferrer"><FaGithub size={16} /> GitHub <ArrowUpRight size={13} /></a><a href="https://linkedin.com/in/andrew-ambuka-9582152b0/" target="_blank" rel="noreferrer"><FaLinkedin size={16} /> LinkedIn <ArrowUpRight size={13} /></a><a href="mailto:andrewambuka9@gmail.com"><Mail size={16} /> Email <ArrowUpRight size={13} /></a></div>
         </div>
         <div className="hero-visual" aria-label="Portrait of Andrew Ambuka"><div className="portrait-hanging"><div className="portrait-frame"><img src="/home-removebg-preview.png" alt="Andrew Ambuka" fetchPriority="high" /></div></div></div>
@@ -101,8 +103,6 @@ function App() {
         <div className="section-heading"><div><span className="section-kicker">01 / SELECTED WORK</span><h2>Systems with a <em>purpose.</em></h2></div><p>Production experience and engineering explorations, described with care and without the noise.</p></div>
         <div className="project-list">{projects.map((project) => <article className="project-row" key={project.id}><div className="project-number">{project.id}</div><div className="project-main"><span className="project-type">{project.type}</span><h3>{project.title}</h3><p className="project-summary">{project.summary}</p>{project.image && <img className="project-preview" style={{ display: 'block', width: '100%', maxWidth: '360px', height: 'auto', objectFit: 'contain' }} src={project.image} alt={project.imageAlt} loading="lazy" /> }<p className="project-detail">{project.detail}</p><div className="tag-list">{project.stack.map((tag) => <span key={tag}>{tag}</span>)}</div>{project.href && <div className="project-links"><a href={project.href} target="_blank" rel="noopener noreferrer">{project.linkLabel} <ArrowUpRight size={14} /></a></div>}</div><div className="project-mark"><Code2 size={22} /><span>ENGINEERING<br />CASE FILE</span></div></article>)}</div>
       </section>
-
-      <PixelFootball />
 
       <section className="experience-section" id="experience"><div className="section-wrap"><div className="section-heading"><div><span className="section-kicker">02 / EXPERIENCE</span><h2>Built in <em>production.</em></h2></div><p>Working on software where reliability, clarity and real-world constraints matter.</p></div><div className="timeline">{experience.map((item) => <article className="timeline-item" key={item.role}><div className="timeline-date">{item.date}</div><div className="timeline-content"><div className="timeline-title"><h3>{item.role}</h3>{item.current && <span className="current-badge"><span className="live-dot" /> CURRENT</span>}</div><h4>{item.company}</h4><p>{item.detail}</p></div></article>)}</div></div></section>
 
