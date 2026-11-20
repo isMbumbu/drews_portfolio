@@ -13,6 +13,8 @@
 .project-row:nth-child(3),.timeline-item:nth-child(3),.skill-row:nth-child(3),.education-grid article:nth-child(3){transition-delay:180ms}
 .skill-row:nth-child(4){transition-delay:240ms}.skill-row:nth-child(5){transition-delay:300ms}
 @media(prefers-reduced-motion:reduce){.scroll-reveal{opacity:1;transform:none;transition:none}}
+.role-rotate{position:relative;display:inline-block;width:9.8em;height:1.3em;overflow:hidden;vertical-align:bottom;color:var(--green)}
+.role-rotate>span{position:absolute;left:0;top:0;white-space:nowrap}
 
 /* Keep the hero portrait simple and circular. */
 .hero-visual{width:min(100%,400px);height:400px}
