@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ArrowDown, ArrowRight, ArrowUpRight, Check, Code2, Gamepad2, Mail, Menu, X } from 'lucide-react'
+import { ArrowDown, ArrowRight, ArrowUpRight, Check, Code2, Mail, Menu, Puzzle, X } from 'lucide-react'
 import { FaGithub, FaLinkedin } from 'react-icons/fa'
-import PixelFootball from './components/football/PixelFootball'
+import CheckmatePuzzle from './components/chess/CheckmatePuzzle'
 import './App.css'
 
 const experience = [
@@ -35,9 +35,9 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [status, setStatus] = useState('')
   const [roleIndex, setRoleIndex] = useState(0)
-  const [footballOpen, setFootballOpen] = useState(false)
+  const [puzzleOpen, setPuzzleOpen] = useState(false)
   useEffect(() => {
-    const targets = document.querySelectorAll('.section-heading, .project-row, .timeline-item, .about-intro, .about-copy, .skill-row, .ai-content > div, .education-grid article, .contact-copy, .contact-form, .football-heading, .football-game')
+    const targets = document.querySelectorAll('.section-heading, .project-row, .timeline-item, .about-intro, .about-copy, .skill-row, .ai-content > div, .education-grid article, .contact-copy, .contact-form')
     if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
     targets.forEach((target) => target.classList.add('scroll-reveal'))
@@ -75,7 +75,7 @@ function App() {
   }
 
   return <>
-    {footballOpen && <PixelFootball onClose={() => setFootballOpen(false)} />}
+    {puzzleOpen && <CheckmatePuzzle onClose={() => setPuzzleOpen(false)} />}
     <header className="site-header">
       <a className="wordmark" href="#home" onClick={closeMenu}>AA<span>.</span></a>
       <button className="menu-button" aria-label={menuOpen ? 'Close navigation' : 'Open navigation'} aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X /> : <Menu />}</button>
@@ -92,7 +92,7 @@ function App() {
           <h1>Building intelligent<br />software for the <em>real world.</em></h1>
           <p className="hero-role">Full-Stack Software Engineer <span>·</span> <span className="role-rotate"><AnimatePresence mode="wait" initial={false}><motion.span key={rotatingRoles[roleIndex]} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}>{rotatingRoles[roleIndex]}</motion.span></AnimatePresence></span></p>
           <p className="hero-description">I’m Andrew Ambuka. I build production software across APIs, payment workflows, integrations and user-facing applications. Now I’m extending that foundation into applied AI.</p>
-        <div className="hero-actions"><a className="button button-primary" href="#work">Explore selected work <ArrowDown size={16} /></a><button className="button button-game" type="button" onClick={() => setFootballOpen(true)}><Gamepad2 size={17} /> Play Pixel Football <ArrowRight size={15} /></button><a className="text-link" href="/resume.pdf" target="_blank" rel="noreferrer">View CV <ArrowUpRight size={16} /></a></div>
+        <div className="hero-actions"><a className="button button-primary" href="#work">Explore selected work <ArrowDown size={16} /></a><button className="button button-game" type="button" onClick={() => setPuzzleOpen(true)}><Puzzle size={17} /> Find the checkmate <ArrowRight size={15} /></button><a className="text-link" href="/resume.pdf" target="_blank" rel="noreferrer">View CV <ArrowUpRight size={16} /></a></div>
           <div className="social-links"><a href="https://github.com/isMbumbu" target="_blank" rel="noreferrer"><FaGithub size={16} /> GitHub <ArrowUpRight size={13} /></a><a href="https://linkedin.com/in/andrew-ambuka-9582152b0/" target="_blank" rel="noreferrer"><FaLinkedin size={16} /> LinkedIn <ArrowUpRight size={13} /></a><a href="mailto:andrewambuka9@gmail.com"><Mail size={16} /> Email <ArrowUpRight size={13} /></a></div>
         </div>
         <div className="hero-visual" aria-label="Portrait of Andrew Ambuka"><div className="portrait-hanging"><div className="portrait-frame"><img src="/home-removebg-preview.png" alt="Andrew Ambuka" fetchPriority="high" /></div></div></div>
