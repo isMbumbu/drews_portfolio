@@ -118,3 +118,35 @@
   .checkmate-layout.is-playing .checkmate-board-column,.checkmate-layout.has-popup .checkmate-board-column{width:min(calc(100vw - 28px),58vh)}
 }
 @media(prefers-reduced-motion:reduce){.chess-piece{transition:none}}
+.checkmate-layout.is-playing{width:min(100%,1160px);display:grid;grid-template-columns:minmax(0,min(70vh,700px)) minmax(300px,360px);align-items:center;justify-content:center;gap:clamp(24px,4vw,48px)}
+.checkmate-layout.is-playing .checkmate-board-column{width:100%;max-width:min(70vh,700px)}
+.checkmate-layout.is-playing .checkmate-player-strip,.checkmate-layout.is-playing .checkmate-board-caption{width:100%}
+.checkmate-game-panel{width:100%;max-height:min(720px,calc(100dvh - 112px));overflow:auto;align-self:center;padding:clamp(22px,2.5vw,30px);border:1px solid #344032;background:linear-gradient(145deg,rgba(29,37,28,.98),rgba(17,22,17,.99));box-shadow:0 22px 70px #0005;animation:checkmate-card-in .45s cubic-bezier(.16,1,.3,1) both}
+.checkmate-panel-kicker{color:var(--green);font:9px var(--mono);letter-spacing:.17em}
+.checkmate-game-panel h2{margin:12px 0 8px;font:600 clamp(27px,3vw,38px)/1.1 var(--display);letter-spacing:-.05em}
+.checkmate-game-panel h2 em{color:var(--green);font-style:normal}
+.checkmate-puzzle-meta{display:flex;gap:8px;flex-wrap:wrap}.checkmate-puzzle-meta span{padding:5px 7px;border:1px solid #3b4738;color:#c4ccb9;font:9px var(--mono);letter-spacing:.08em}
+.checkmate-panel-prompt{margin:20px 0 16px;color:#d4d9ce;font-size:15px}.checkmate-panel-prompt strong{color:var(--green)}
+.checkmate-progress{display:grid;gap:9px;margin:0 0 14px}.checkmate-progress>div{display:flex;justify-content:space-between;color:#aab49f;font:10px var(--mono)}.checkmate-progress strong{color:#e7ebdc;font-weight:600}.checkmate-progress-track{height:5px;overflow:hidden;background:#374232}.checkmate-progress-track i{height:100%;display:block;background:var(--green);box-shadow:0 0 12px #b8dc7670;transition:width .3s ease}
+.checkmate-panel-status{min-height:52px;margin:0 0 14px;padding:10px 12px;font-size:12px}
+.checkmate-panel-actions{display:flex;gap:8px}.checkmate-panel-button{flex:1;min-height:38px;display:flex;align-items:center;justify-content:center;gap:8px;border:1px solid #47543f;background:#182018;color:#dce3d3;font-size:12px;cursor:pointer;transition:color .2s,border-color .2s,background .2s}.checkmate-panel-button:hover:not(:disabled),.checkmate-panel-button.is-active{color:var(--green);border-color:var(--green);background:#20291d}.checkmate-panel-button:disabled{opacity:.42;cursor:not-allowed}
+.checkmate-panel-hint{margin:10px 0 0;padding:11px 12px;border-left:2px solid var(--green);background:#111811;color:#bfc9b2;font-size:12px;line-height:1.6}
+.checkmate-panel-stats{display:grid;grid-template-columns:1fr auto;gap:8px 12px;margin:17px 0;padding:14px 0;border-top:1px solid #303a2e;border-bottom:1px solid #303a2e;color:#929c8c;font-size:11px}.checkmate-panel-stats strong{color:#d7ddce;text-align:right;font-weight:500;text-transform:capitalize}
+.checkmate-history-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px}.checkmate-history h3{margin:0;color:#e3e8db;font:600 14px var(--display)}.checkmate-history-head>span{color:#828e7c;font:9px var(--mono)}.checkmate-history>p{color:#879180;font-size:11px}
+.checkmate-history ol{display:grid;gap:4px;max-height:180px;overflow:auto;margin:10px 0 0;padding:0;list-style:none}.checkmate-history li{display:grid;grid-template-columns:28px 1fr 1fr;gap:8px;padding:6px 8px;background:#111811;color:#e0e6d8;font:12px var(--mono)}.checkmate-history li>span{color:#7f8a77}.checkmate-history li b{font-weight:500}
+.checkmate-popup-close{z-index:1}
+@media(max-width:900px) and (min-width:781px){.checkmate-layout.is-playing{grid-template-columns:minmax(0,1fr) minmax(280px,320px);gap:22px}.checkmate-game-panel{padding:20px}.checkmate-board{width:min(100%,min(62vh,620px))}}
+@media(max-width:780px){
+  .checkmate-layout.is-playing{width:100%;display:grid;grid-template-columns:minmax(0,1fr);justify-items:center;gap:20px;padding-top:14px}
+  .checkmate-layout.is-playing .checkmate-board-column{width:min(100%,min(92vw,58vh));max-width:none}
+  .checkmate-game-panel{width:min(100%,560px);max-height:none;padding:19px 18px}
+  .checkmate-game-panel h2{font-size:30px;margin:8px 0}
+  .checkmate-panel-prompt{margin:13px 0 12px;font-size:13px}
+  .checkmate-panel-stats{margin:12px 0;padding:11px 0}
+  .checkmate-history ol{max-height:120px}
+}
+@media(max-width:780px) and (max-height:520px) and (orientation:landscape){
+  .checkmate-layout.is-playing{grid-template-columns:minmax(0,1fr) minmax(250px,300px);gap:18px}
+  .checkmate-layout.is-playing .checkmate-board-column{width:min(100%,55vh)}
+  .checkmate-game-panel{max-height:calc(100dvh - 92px);padding:14px}
+}

@@ -7,14 +7,14 @@ import './checkmate-puzzle.css'
 // Positions and main lines are from the CC0 Lichess puzzle database.
 // Each line is the solver's move, the best defense, and so on through mate.
 const puzzles = [
-  { id: '3eKE8', level: 'Advanced', solverColor: 'black', fen: 'Q7/p3qB2/2pk1p2/3p4/1Pp2nP1/P3PK2/3B3P/1R6 b - - 1 27', solution: ['e7e4','f3g3','e4g2','g3h4','g2h2'], hint: 'The queen has a forcing check. Keep the king exposed and finish with a capture on h2.' },
-  { id: 'My2wA', level: 'Intermediate', solverColor: 'white', fen: '1r1r4/1p5k/2nq2p1/P4BR1/8/1Q2pp2/1PP5/1K6 w - - 0 43', solution: ['b3f7','h7h6','g5g6','d6g6','f7g6'], hint: 'Start with a queen check. The rook joins the attack with tempo.' },
-  { id: 'Qirjd', level: 'Intermediate', solverColor: 'white', fen: '8/6p1/3Q3p/5k2/4p3/4q2P/6PK/8 w - - 7 47', solution: ['g2g4','f5g5','d6e5','g5g6','e5f5'], hint: 'A quiet pawn is the key to opening the king’s path for a queen check.' },
-  { id: 'ycc0e', level: 'Beginner', solverColor: 'white', fen: '2r3k1/p4ppp/4bn2/2Q5/8/2PR4/qP6/2K2R2 w - - 1 32', solution: ['c5c8','e6c8','d3d8','f6e8','d8e8'], hint: 'Trade the queen for the bishop, then use both rooks to force mate.' },
-  { id: 'AAEY7', level: 'Beginner', solverColor: 'black', fen: 'r3kr2/pp2b3/5qpp/8/1P2Q3/2P5/P4PPP/RN2R1K1 b q - 0 24', solution: ['f6f2','g1h1','f2f1','e1f1','f8f1'], hint: 'The queen invasion forces the king and rook into a mating net.' },
-  { id: '2rLtJ', level: 'Beginner', solverColor: 'black', fen: '5r1k/6pp/1p1Q4/4pq2/1P6/4P3/P5PP/R5K1 b - - 0 28', solution: ['f5f2','g1h1','f2f1','a1f1','f8f1'], hint: 'Two forcing queen checks pull the rook away from its defense.' },
-  { id: 'r00X0', level: 'Intermediate', solverColor: 'white', fen: '1r1r3k/pb3Qpp/2q5/2p1p3/8/4P3/P5PP/3R1RK1 w - - 2 26', solution: ['d1d8','b8d8','f7f8','d8f8','f1f8'], hint: 'A rook sacrifice opens the back rank for a decisive queen check.' },
-  { id: 'LBKkM', level: 'Advanced', solverColor: 'white', fen: '7k/R5p1/p4p1p/1p3K2/r5P1/7P/6P1/8 w - - 2 37', solution: ['f5g6','a4d4','a7a8','d4d8','a8d8'], hint: 'Walk the king forward first. The rook promotion threat creates the final net.' },
+  { id: '3eKE8', rating: 2095, themes: ['queen endgame', 'mate in 3'], level: 'Advanced', solverColor: 'black', fen: 'Q7/p3qB2/2pk1p2/3p4/1Pp2nP1/P3PK2/3B3P/1R6 b - - 1 27', solution: ['e7e4','f3g3','e4g2','g3h4','g2h2'], hint: 'The queen has a forcing check. Keep the king exposed and finish with a capture on h2.' },
+  { id: 'My2wA', rating: 1762, themes: ['fork', 'mate in 3'], level: 'Intermediate', solverColor: 'white', fen: '1r1r4/1p5k/2nq2p1/P4BR1/8/1Q2pp2/1PP5/1K6 w - - 0 43', solution: ['b3f7','h7h6','g5g6','d6g6','f7g6'], hint: 'Start with a queen check. The rook joins the attack with tempo.' },
+  { id: 'Qirjd', rating: 1675, themes: ['queen endgame', 'mate in 3'], level: 'Intermediate', solverColor: 'white', fen: '8/6p1/3Q3p/5k2/4p3/4q2P/6PK/8 w - - 7 47', solution: ['g2g4','f5g5','d6e5','g5g6','e5f5'], hint: 'A quiet pawn is the key to opening the king’s path for a queen check.' },
+  { id: 'ycc0e', rating: 1182, themes: ['fork', 'sacrifice', 'mate in 3'], level: 'Beginner', solverColor: 'white', fen: '2r3k1/p4ppp/4bn2/2Q5/8/2PR4/qP6/2K2R2 w - - 1 32', solution: ['c5c8','e6c8','d3d8','f6e8','d8e8'], hint: 'Trade the queen for the bishop, then use both rooks to force mate.' },
+  { id: 'AAEY7', rating: 1005, themes: ['back rank mate', 'sacrifice'], level: 'Beginner', solverColor: 'black', fen: 'r3kr2/pp2b3/5qpp/8/1P2Q3/2P5/P4PPP/RN2R1K1 b q - 0 24', solution: ['f6f2','g1h1','f2f1','e1f1','f8f1'], hint: 'The queen invasion forces the king and rook into a mating net.' },
+  { id: '2rLtJ', rating: 985, themes: ['back rank mate', 'sacrifice'], level: 'Beginner', solverColor: 'black', fen: '5r1k/6pp/1p1Q4/4pq2/1P6/4P3/P5PP/R5K1 b - - 0 28', solution: ['f5f2','g1h1','f2f1','a1f1','f8f1'], hint: 'Two forcing queen checks pull the rook away from its defense.' },
+  { id: 'r00X0', rating: 1106, themes: ['back rank mate', 'sacrifice'], level: 'Intermediate', solverColor: 'white', fen: '1r1r3k/pb3Qpp/2q5/2p1p3/8/4P3/P5PP/3R1RK1 w - - 2 26', solution: ['d1d8','b8d8','f7f8','d8f8','f1f8'], hint: 'A rook sacrifice opens the back rank for a decisive queen check.' },
+  { id: 'LBKkM', rating: 1341, themes: ['rook endgame', 'mate in 3'], level: 'Advanced', solverColor: 'white', fen: '7k/R5p1/p4p1p/1p3K2/r5P1/7P/6P1/8 w - - 2 37', solution: ['f5g6','a4d4','a7a8','d4d8','a8d8'], hint: 'Walk the king forward first. The rook promotion threat creates the final net.' },
 ]
 
 const files = 'abcdefgh'
@@ -56,6 +56,10 @@ function CheckmatePuzzle({ onClose }) {
   const [status, setStatus] = useState('Find the forcing line. Black will defend after each move.')
   const [solved, setSolved] = useState(false)
   const [failed, setFailed] = useState(false)
+  const [mistakes, setMistakes] = useState(0)
+  const [solvedCount, setSolvedCount] = useState(() => {
+    try { return Number(window.localStorage.getItem('aa-chess-solved') || 0) } catch { return 0 }
+  })
   const [thinking, setThinking] = useState(false)
   const [movesLeft, setMovesLeft] = useState(3)
   const [hintOpen, setHintOpen] = useState(false)
@@ -64,12 +68,24 @@ function CheckmatePuzzle({ onClose }) {
   const squareRefs = useRef({})
   const audioContextRef = useRef(null)
   const replyTimerRef = useRef(null)
+  const turnSnapshotsRef = useRef([])
+  const completedPuzzleRef = useRef(false)
   const [lastMove, setLastMove] = useState(null)
   const onCloseRef = useRef(onClose)
   onCloseRef.current = onClose
   const solverColor = puzzle.solverColor
   const isSolverTurn = gameRef.current.turn() === solverColor
   const destinations = selected ? gameRef.current.moves({ square: selected, verbose: true }).map((move) => move.to) : []
+  const moveHistory = gameRef.current.history({ verbose: true })
+  const firstMoveNumber = Number(puzzle.fen.split(' ')[5])
+  const historyRows = moveHistory.reduce((rows, move, index) => {
+    const number = firstMoveNumber + Math.floor(index / 2)
+    const row = rows.find((item) => item.number === number) || { number, white: '', black: '' }
+    if (move.color === 'w') row.white = move.san
+    else row.black = move.san
+    if (!rows.includes(row)) rows.push(row)
+    return rows
+  }, [])
 
   useEffect(() => {
     const oldBodyOverflow = document.body.style.overflow
@@ -125,10 +141,13 @@ function CheckmatePuzzle({ onClose }) {
     setSelected(null)
     setSolved(false)
     setFailed(false)
+    setMistakes(0)
     setThinking(false)
     setMovesLeft(3)
     setLastMove(null)
     setHintOpen(false)
+    turnSnapshotsRef.current = []
+    completedPuzzleRef.current = false
     setFocusedSquare(next.solverColor === 'w' ? 'a8' : 'h1')
     setStatus('Find the forcing line. The opponent will defend after each move.')
   }
@@ -136,6 +155,19 @@ function CheckmatePuzzle({ onClose }) {
   const resetPuzzle = () => loadPuzzle(puzzle)
   const retryPuzzle = () => { loadPuzzle(puzzle); setStarted(true) }
   const startPuzzle = () => setStarted(true)
+  const undoTurn = () => {
+    const previous = turnSnapshotsRef.current.pop()
+    if (!previous) return
+    if (replyTimerRef.current) window.clearTimeout(replyTimerRef.current)
+    gameRef.current = new Chess(previous.fen)
+    setPieces(displayPieces(gameRef.current))
+    setPly(previous.ply)
+    setMovesLeft(previous.movesLeft)
+    setLastMove(previous.lastMove)
+    setSelected(null)
+    setThinking(false)
+    setStatus('Move undone. Try a different line.')
+  }
   const chooseLevel = (nextLevel) => {
     setLevel(nextLevel)
     loadPuzzle(choosePuzzle(puzzle.id, nextLevel))
@@ -168,12 +200,13 @@ function CheckmatePuzzle({ onClose }) {
     const chosen = { from: fromSquare, to: square }
     if (chosen.from !== expected.from || chosen.to !== expected.to) {
       setSelected(null)
-      setFailed(true)
-      setStatus('That move misses the forced mate. Reset and look for a stronger move.')
+      setMistakes((count) => count + 1)
+      setStatus('That move misses the forced line. Try another move.')
       playSound('miss')
       return
     }
     const game = gameRef.current
+    turnSnapshotsRef.current.push({ fen: game.fen(), ply, movesLeft, lastMove })
     const played = game.move({ ...chosen, ...(expected.promotion ? { promotion: expected.promotion } : {}) })
     setPieces(displayPieces(game))
     setSelected(null)
@@ -183,6 +216,14 @@ function CheckmatePuzzle({ onClose }) {
     if (game.isCheckmate()) {
       setSolved(true)
       setStatus('Checkmate! You found the full line.')
+      if (!completedPuzzleRef.current) {
+        completedPuzzleRef.current = true
+        setSolvedCount((count) => {
+          const nextCount = count + 1
+          try { window.localStorage.setItem('aa-chess-solved', String(nextCount)) } catch { /* Continue without persistence if storage is unavailable. */ }
+          return nextCount
+        })
+      }
       playSound('mate')
       return
     }
@@ -258,8 +299,25 @@ function CheckmatePuzzle({ onClose }) {
             }))}
           </div>
           <div className="checkmate-board-caption"><span>{thinking ? 'OPPONENT IS THINKING' : solved ? 'CHECKMATE' : failed ? 'TRY AGAIN' : `${solverColor === 'w' ? 'WHITE' : 'BLACK'} TO MOVE · MATE IN 3`}</span><span>{movesLeft} {movesLeft === 1 ? 'MOVE' : 'MOVES'} LEFT</span></div>
-          {started && !solved && !failed && <p className="checkmate-play-status" role="status">{status}</p>}
         </section>
+
+        {started && !solved && !failed && <aside className="checkmate-game-panel" aria-label="Puzzle information and controls">
+          <span className="checkmate-panel-kicker">AA. · TACTICAL TRAINING</span>
+          <h2>Puzzle <em>#{puzzle.id}</em></h2>
+          <div className="checkmate-puzzle-meta"><span>{puzzle.level.toUpperCase()}</span><span>{puzzle.rating} ELO</span></div>
+          <p className="checkmate-panel-prompt">Find the best move for <strong>{solverColor === 'w' ? 'White' : 'Black'}</strong>.</p>
+          <div className="checkmate-progress"><div><span>Progress</span><strong>{3 - movesLeft} / 3 moves</strong></div><span className="checkmate-progress-track"><i style={{ width: `${((3 - movesLeft) / 3) * 100}%` }} /></span></div>
+          <p className="checkmate-status checkmate-panel-status" role="status">{status}</p>
+          <div className="checkmate-panel-actions">
+            <button type="button" className={`checkmate-panel-button${hintOpen ? ' is-active' : ''}`} onClick={() => setHintOpen((open) => !open)} aria-expanded={hintOpen}><Lightbulb size={15} /> {hintOpen ? 'Hide hint' : 'Hint'}</button>
+            <button type="button" className="checkmate-panel-button" onClick={undoTurn} disabled={!turnSnapshotsRef.current.length}><RotateCcw size={14} /> Undo</button>
+          </div>
+          {hintOpen && <p className="checkmate-panel-hint">{puzzle.hint}</p>}
+          <div className="checkmate-panel-stats"><span>Theme</span><strong>{puzzle.themes.join(' · ')}</strong><span>Mistakes</span><strong>{mistakes}</strong><span>Solved</span><strong>{solvedCount}</strong></div>
+          <div className="checkmate-history"><div className="checkmate-history-head"><h3>Move history</h3><span>{historyRows.length} full moves</span></div>
+            {historyRows.length ? <ol>{historyRows.map((row, index) => <li key={`${row.number}-${index}`}><span>{row.number}.</span><b>{row.white || '…'}</b><b>{row.black || '…'}</b></li>)}</ol> : <p>Your moves will appear here.</p>}
+          </div>
+        </aside>}
 
         {(!started || solved || failed) && <div className="checkmate-popup-backdrop">
           <aside className="checkmate-card checkmate-popup" aria-labelledby="checkmate-popup-title">
