@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Chess } from 'chess.js'
+import { Chessboard } from 'react-chessboard'
 import { ArrowRight, ArrowUpRight, Lightbulb, RotateCcw, Volume2, VolumeX, X } from 'lucide-react'
 import './checkmate-puzzle.css'
 
@@ -17,10 +18,10 @@ const puzzles = [
   { id: 'LBKkM', rating: 1341, themes: ['rook endgame', 'mate in 3'], level: 'Advanced', solverColor: 'white', fen: '7k/R5p1/p4p1p/1p3K2/r5P1/7P/6P1/8 w - - 2 37', solution: ['f5g6','a4d4','a7a8','d4d8','a8d8'], hint: 'Walk the king forward first. The rook promotion threat creates the final net.' },
 ]
 
-const files = 'abcdefgh'
 const pieceNames = { k: 'king', q: 'queen', r: 'rook', b: 'bishop', n: 'knight', p: 'pawn' }
 const levels = ['Random', 'Beginner', 'Intermediate', 'Advanced']
 const colorName = (color) => color === 'w' ? 'white' : 'black'
+const asChessColor = (side) => side === 'white' || side === 'w' ? 'w' : 'b'
 const displayPieces = (game) => Object.fromEntries(game.board().flatMap((row) => row.filter(Boolean).map((piece) => [piece.square, `${piece.color}${piece.type.toUpperCase()}`])))
 const choosePuzzle = (previousId, level) => {
   const pool = level === 'Random' ? puzzles : puzzles.filter((puzzle) => puzzle.level === level)
@@ -29,19 +30,6 @@ const choosePuzzle = (previousId, level) => {
   return available[Math.floor(Math.random() * available.length)]
 }
 const moveFromUci = (uci) => ({ from: uci.slice(0, 2), to: uci.slice(2, 4), promotion: uci[4] })
-
-function ChessPiece({ color, type, justMoved }) {
-  const detailColor = color === 'w' ? '#263125' : '#e8ecd9'
-  const shapes = {
-    p: <><circle cx="50" cy="23" r="11" /><path d="M42 37c1 8-2 15-9 24l-4 13h42l-4-13c-7-9-10-16-9-24-5 4-11 4-16 0Z" /></>,
-    r: <path d="M29 19h12v10h8V19h12v10h9l-4 43H34l-4-43h9V19Zm4 53h34v8H33z" />,
-    n: <path d="M31 72c2-13 4-22 2-31l-5-9 12 3c8-15 21-20 34-12l-6 11 9 13-5 25H31Zm25-39 2 8 8-2-5-7-5 1Z" />,
-    b: <><path d="M50 14c11 9 16 18 12 28-2 5-7 8-12 10-5-2-10-5-12-10-4-10 1-19 12-28ZM39 53h22l7 20H32l7-20Zm-7 22h36v7H32z" /><path className="piece-detail" d="m44 27 12 13" fill="none" stroke={detailColor} strokeWidth="4" /></>,
-    q: <><path d="m30 29 13 12 7-23 7 23 13-12-5 29H35l-5-29Zm5 33h30l4 11H31l4-11Zm-4 14h32v7H31z" /><circle cx="29" cy="25" r="5" /><circle cx="50" cy="15" r="5" /><circle cx="71" cy="25" r="5" /></>,
-    k: <><path d="M45 11h10v12h11v9H55v8c4 4 9 8 13 14l5 19H27l5-19c4-6 9-10 13-14v-8H34v-9h11V11Zm-13 64h36v7H32z" /><path className="piece-detail" d="M50 8v20M42 18h16" fill="none" stroke={detailColor} strokeWidth="4" /></>,
-  }
-  return <svg className={`chess-piece ${color === 'w' ? 'white' : 'black'}${justMoved ? ' just-moved' : ''}`} viewBox="0 0 100 100" aria-hidden="true" fill="currentColor" stroke="currentColor" strokeWidth="3.5" strokeLinejoin="round">{shapes[type]}<path d="M27 84h46v6H27z" /><path d="M24 91h52v5H24z" /></svg>
-}
 
 function CheckmatePuzzle({ onClose }) {
   const [level, setLevel] = useState('Random')
@@ -52,7 +40,6 @@ function CheckmatePuzzle({ onClose }) {
   const [started, setStarted] = useState(false)
   const [ply, setPly] = useState(0)
   const [selected, setSelected] = useState(null)
-  const [focusedSquare, setFocusedSquare] = useState('a8')
   const [status, setStatus] = useState('Find the forcing line. Black will defend after each move.')
   const [solved, setSolved] = useState(false)
   const [failed, setFailed] = useState(false)
@@ -65,15 +52,15 @@ function CheckmatePuzzle({ onClose }) {
   const [hintOpen, setHintOpen] = useState(false)
   const [soundOn, setSoundOn] = useState(true)
   const screenRef = useRef(null)
-  const squareRefs = useRef({})
   const audioContextRef = useRef(null)
   const replyTimerRef = useRef(null)
   const turnSnapshotsRef = useRef([])
   const completedPuzzleRef = useRef(false)
+  const lastDropAtRef = useRef(0)
   const [lastMove, setLastMove] = useState(null)
   const onCloseRef = useRef(onClose)
   onCloseRef.current = onClose
-  const solverColor = puzzle.solverColor
+  const solverColor = asChessColor(puzzle.solverColor)
   const isSolverTurn = gameRef.current.turn() === solverColor
   const destinations = selected ? gameRef.current.moves({ square: selected, verbose: true }).map((move) => move.to) : []
   const moveHistory = gameRef.current.history({ verbose: true })
@@ -148,7 +135,6 @@ function CheckmatePuzzle({ onClose }) {
     setHintOpen(false)
     turnSnapshotsRef.current = []
     completedPuzzleRef.current = false
-    setFocusedSquare(next.solverColor === 'w' ? 'a8' : 'h1')
     setStatus('Find the forcing line. The opponent will defend after each move.')
   }
   const newPuzzle = () => loadPuzzle(choosePuzzle(puzzle.id, level))
@@ -173,29 +159,11 @@ function CheckmatePuzzle({ onClose }) {
     loadPuzzle(choosePuzzle(puzzle.id, nextLevel))
   }
 
-  const moveBoardFocus = (event, square) => {
-    const vectors = { ArrowUp: [0, 1], ArrowDown: [0, -1], ArrowLeft: [-1, 0], ArrowRight: [1, 0] }
-    const vector = vectors[event.key]
-    if (!vector) return
-    event.preventDefault()
-    const { x, y } = { x: files.indexOf(square[0]), y: Number(square[1]) - 1 }
-    const nx = Math.max(0, Math.min(7, x + vector[0]))
-    const ny = Math.max(0, Math.min(7, y + vector[1]))
-    const next = `${files[nx]}${ny + 1}`
-    setFocusedSquare(next)
-    squareRefs.current[next]?.focus()
-  }
-
-  const chooseSquare = (square, fromSquare = selected) => {
-    if (solved || failed || thinking) return
-    const piece = pieces[square]
-    if (piece && piece[0] === solverColor && isSolverTurn) {
-      setSelected(square === selected ? null : square)
-      setStatus(square === selected ? 'Piece deselected.' : `Selected ${pieceNames[piece[1].toLowerCase()]}. Choose a legal destination.`)
-      playSound('select')
-      return
-    }
-    if (!fromSquare || !gameRef.current.moves({ square: fromSquare, verbose: true }).some((move) => move.to === square)) return
+  const attemptMove = (fromSquare, square) => {
+    if (!started || solved || failed || thinking || !isSolverTurn) return false
+    const movingPiece = pieces[fromSquare]
+    if (!movingPiece || movingPiece[0] !== solverColor) return false
+    if (!gameRef.current.moves({ square: fromSquare, verbose: true }).some((move) => move.to === square)) return false
     const expected = moveFromUci(puzzle.solution[ply])
     const chosen = { from: fromSquare, to: square }
     if (chosen.from !== expected.from || chosen.to !== expected.to) {
@@ -203,7 +171,7 @@ function CheckmatePuzzle({ onClose }) {
       setMistakes((count) => count + 1)
       setStatus('That move misses the forced line. Try another move.')
       playSound('miss')
-      return
+      return false
     }
     const game = gameRef.current
     turnSnapshotsRef.current.push({ fen: game.fen(), ply, movesLeft, lastMove })
@@ -225,14 +193,14 @@ function CheckmatePuzzle({ onClose }) {
         })
       }
       playSound('mate')
-      return
+      return true
     }
     playSound(game.isCheck() ? 'check' : 'move')
     const replyUci = puzzle.solution[ply + 1]
     if (!replyUci) {
       setFailed(true)
       setStatus('The puzzle line ended before checkmate. Try another position.')
-      return
+      return true
     }
     setThinking(true)
     setStatus(game.isCheck() ? 'Check. The opponent is calculating a defense…' : 'The opponent is calculating…')
@@ -246,10 +214,41 @@ function CheckmatePuzzle({ onClose }) {
       playSound('reply')
       setStatus('Defense played. Find the next move in the combination.')
     }, 520)
+    return true
   }
 
-  const boardRanks = solverColor === 'w' ? [8,7,6,5,4,3,2,1] : [1,2,3,4,5,6,7,8]
-  const boardFiles = solverColor === 'w' ? files.split('') : files.split('').reverse()
+  const chooseSquare = (square) => {
+    if (!started || solved || failed || thinking || !isSolverTurn) return
+    const piece = pieces[square]
+    if (piece && piece[0] === solverColor && isSolverTurn) {
+      setSelected(square === selected ? null : square)
+      setStatus(square === selected ? 'Piece deselected.' : `Selected ${pieceNames[piece[1].toLowerCase()]}. Choose a legal destination.`)
+      playSound('select')
+      return
+    }
+  }
+
+  const handleBoardSquareClick = (square) => {
+    if (Date.now() - lastDropAtRef.current < 250) return
+    if (selected) {
+      const moved = attemptMove(selected, square)
+      if (moved) return
+    }
+    chooseSquare(square)
+  }
+  const handlePieceDrop = (from, to) => {
+    lastDropAtRef.current = Date.now()
+    return attemptMove(from, to)
+  }
+  const moveHighlights = {}
+  if (lastMove) {
+    moveHighlights[lastMove.from] = { backgroundColor: 'rgba(184,220,118,.28)' }
+    moveHighlights[lastMove.to] = { backgroundColor: 'rgba(184,220,118,.42)' }
+  }
+  if (selected) {
+    moveHighlights[selected] = { boxShadow: 'inset 0 0 0 4px #b8dc76' }
+    destinations.forEach((square) => { moveHighlights[square] = { boxShadow: `inset 0 0 0 3px ${pieces[square] ? '#f2cf69' : '#87aa60'}` } })
+  }
 
   return createPortal(
     <div className="checkmate-screen" ref={screenRef} tabIndex={-1} role="dialog" aria-modal="true" aria-label="Find the checkmate chess puzzle">
@@ -269,34 +268,23 @@ function CheckmatePuzzle({ onClose }) {
             <span className={`checkmate-side-badge ${colorName(solverColor)}`}><i /> YOU PLAY {solverColor === 'w' ? 'WHITE' : 'BLACK'}</span>
             <span className="checkmate-opponent-label">{solverColor === 'w' ? 'BLACK' : 'WHITE'} DEFENDS</span>
           </div>
-          <div className={`checkmate-board${solved ? ' is-solved' : ''}`} role="grid" aria-label="Chess board">
-            {boardRanks.flatMap((rank) => boardFiles.map((file) => {
-              const square = `${file}${rank}`
-              const piece = pieces[square]
-              const pieceColor = piece?.[0]
-              const isHint = destinations.includes(square)
-              const isLastMove = solved && square === lastMove?.to
-              const light = (files.indexOf(file) + rank) % 2 === 0
-              const squareClass = ['chess-square', light ? 'chess-light' : 'chess-dark', selected === square ? 'chess-selected' : '', lastMove?.from === square ? 'chess-last-from' : '', lastMove?.to === square ? 'chess-last-to' : '', isLastMove ? 'chess-mate-square' : ''].filter(Boolean).join(' ')
-              return (
-                <button key={square} ref={(node) => { squareRefs.current[square] = node }} type="button" role="gridcell" tabIndex={focusedSquare === square ? 0 : -1} className={squareClass} disabled={thinking || solved || failed} draggable={Boolean(piece && pieceColor === solverColor && isSolverTurn)} onDragStart={(event) => {
-                  if (!piece || pieceColor !== solverColor || !isSolverTurn) { event.preventDefault(); return }
-                  event.dataTransfer.effectAllowed = 'move'
-                  event.dataTransfer.setData('text/plain', square)
-                  setSelected(square)
-                  playSound('select')
-                }} onDragOver={(event) => { if (selected && destinations.includes(square)) event.preventDefault() }} onDrop={(event) => {
-                  event.preventDefault()
-                  const from = event.dataTransfer.getData('text/plain') || selected
-                  if (from) chooseSquare(square, from)
-                }} onFocus={() => setFocusedSquare(square)} onKeyDown={(event) => moveBoardFocus(event, square)} onClick={() => chooseSquare(square)} aria-label={`${square}${piece ? `, ${colorName(pieceColor)} ${pieceNames[piece[1].toLowerCase()]}` : ''}${isHint ? ', legal move' : ''}`}>
-                  {piece && <ChessPiece color={pieceColor} type={piece[1].toLowerCase()} justMoved={lastMove?.to === square} />}
-                  {isHint && <span className="chess-move-hint" />}
-                  {file === boardFiles[0] && <span className="chess-coordinate rank-coordinate">{rank}</span>}
-                  {rank === (solverColor === 'w' ? 1 : 8) && <span className="chess-coordinate file-coordinate">{file}</span>}
-                </button>
-              )
-            }))}
+          <div className={`checkmate-board${solved ? ' is-solved' : ''}`} aria-label={`Chess board, viewed from ${colorName(solverColor)}’s side`}>
+            <Chessboard
+              position={gameRef.current.fen()}
+              boardOrientation={colorName(solverColor)}
+              animationDuration={280}
+              arePiecesDraggable={started && !solved && !failed && !thinking && isSolverTurn}
+              isDraggablePiece={(piece) => started && !solved && !failed && !thinking && isSolverTurn && piece[0] === solverColor}
+              onPieceDrop={handlePieceDrop}
+              onSquareClick={handleBoardSquareClick}
+              autoPromoteToQueen
+              showBoardNotation
+              customBoardStyle={{ borderRadius: '2px', boxShadow: 'none' }}
+              customLightSquareStyle={{ backgroundColor: '#e8d2aa', backgroundImage: 'linear-gradient(135deg,rgba(255,249,220,.26),transparent 58%),repeating-linear-gradient(3deg,rgba(125,83,42,.045) 0 1px,transparent 1px 9px)' }}
+              customDarkSquareStyle={{ backgroundColor: '#936741', backgroundImage: 'linear-gradient(135deg,rgba(255,218,156,.12),transparent 62%),repeating-linear-gradient(-2deg,rgba(38,25,15,.085) 0 1px,transparent 1px 10px)' }}
+              customNotationStyle={{ color: '#243321', fontWeight: 700, textShadow: '0 1px rgba(255,255,255,.55)' }}
+              customSquareStyles={moveHighlights}
+            />
           </div>
           <div className="checkmate-board-caption"><span>{thinking ? 'OPPONENT IS THINKING' : solved ? 'CHECKMATE' : failed ? 'TRY AGAIN' : `${solverColor === 'w' ? 'WHITE' : 'BLACK'} TO MOVE · MATE IN 3`}</span><span>{movesLeft} {movesLeft === 1 ? 'MOVE' : 'MOVES'} LEFT</span></div>
         </section>

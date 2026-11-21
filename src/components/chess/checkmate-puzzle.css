@@ -150,3 +150,15 @@
   .checkmate-layout.is-playing .checkmate-board-column{width:min(100%,55vh)}
   .checkmate-game-panel{max-height:calc(100dvh - 92px);padding:14px}
 }
+.checkmate-board{display:block;width:min(100%,min(76vh,740px));aspect-ratio:1;box-sizing:border-box;overflow:hidden;border:9px solid #61452f;background:#61452f;box-shadow:0 0 0 2px #b8dc76a0,0 24px 76px #0009,inset 0 0 0 2px #d0a66c}
+.checkmate-board>div{width:100%;height:100%}
+.checkmate-board-column .checkmate-board-caption{width:min(100%,min(76vh,740px))}
+.checkmate-board-column{width:min(100%,min(76vh,740px))}
+.checkmate-board .square-55d63{transition:filter .18s ease}
+.checkmate-board .square-55d63:hover{filter:brightness(1.06)}
+.checkmate-player-strip{width:min(100%,min(76vh,740px))}
+@media(max-width:780px){
+  .checkmate-board-column,.checkmate-board-column .checkmate-board-caption,.checkmate-player-strip{width:min(100%,min(92vw,58vh))}
+  .checkmate-board{width:100%;border-width:7px}
+}
+@media(max-width:780px) and (orientation:portrait){.checkmate-layout.is-playing .checkmate-board-column,.checkmate-layout.has-popup .checkmate-board-column{width:min(calc(100vw - 28px),58vh)}}
