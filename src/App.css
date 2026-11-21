@@ -19,6 +19,11 @@
 .button-game{padding:13px 15px;background:transparent;color:var(--green);border:1px solid #46543e;cursor:pointer}
 .button-game:hover{background:#1b231a;border-color:var(--green);transform:translateY(-2px)}
 @media(max-width:900px){.hero-actions{flex-wrap:wrap;gap:15px}}
+.chess-cta-group{display:flex;align-items:center;gap:8px}
+.button-chess-profile{min-height:45px;min-width:126px;display:grid;grid-template-columns:auto auto;align-content:center;justify-content:center;align-items:center;column-gap:6px;padding:6px 11px;border:1px solid #e9d78f;background:#e9d78f;color:#1b2117;font-size:11px;font-weight:700;line-height:1.1;transition:transform .2s,background .2s,border-color .2s}
+.button-chess-profile span{grid-column:1/-1;margin-bottom:4px;color:#586445;font:8px var(--mono);letter-spacing:.13em}
+.button-chess-profile:hover{transform:translateY(-2px);background:#f4e7b4;border-color:#f4e7b4}
+@media(max-width:600px){.chess-cta-group{gap:7px}.button-chess-profile{min-width:118px;padding-inline:8px}.hero-actions{row-gap:14px}}
 
 /* Keep the hero portrait simple and circular. */
 .hero-visual{width:min(100%,400px);height:400px}

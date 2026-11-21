@@ -31,3 +31,27 @@
 @media(max-height:700px) and (min-width:781px){.checkmate-layout{grid-template-columns:minmax(0,1fr) 270px;gap:28px;padding:14px 0}.checkmate-board{width:min(100%,min(68vh,580px))}.checkmate-card{padding:8px 0}.checkmate-card h1{font-size:44px;margin:12px 0}.checkmate-instruction{margin-bottom:12px}.checkmate-status{min-height:auto;padding:10px;margin-bottom:12px}.checkmate-hint{padding-bottom:12px}.checkmate-actions{margin-top:12px}.checkmate-help{margin-top:10px}}
 @media(max-width:780px) and (max-height:520px) and (orientation:landscape){.checkmate-layout{grid-template-columns:minmax(0,1fr) 220px;gap:16px}.checkmate-board-column{width:min(100%,55vh)}.checkmate-board{border-width:4px}.checkmate-card{padding:0}.checkmate-card h1{font-size:34px}.checkmate-hint p{font-size:11px}.checkmate-actions{flex-direction:column;align-items:stretch}.checkmate-next{width:100%}.checkmate-reset{align-self:center}.checkmate-help{display:block;font-size:10px}}
 @media(prefers-reduced-motion:reduce){.checkmate-screen,.checkmate-board-column,.checkmate-card,.checkmate-live-dot,.chess-mate-square{animation:none}}
+
+/* Brighter board contrast and clearer move feedback. */
+.checkmate-board{border-color:#1c2a1d;background:#1c2a1d;box-shadow:0 28px 90px #0009,0 0 0 1px #b8dc7650}
+.chess-light{background:#f0efdc}.chess-dark{background:#4b7948}
+.chess-square:hover{filter:brightness(1.1)}
+.chess-square.chess-selected{box-shadow:inset 0 0 0 4px #ffe16b,inset 0 0 25px #ffd94e90}
+.chess-square.chess-last-from{background-color:#d5b94e!important}
+.chess-square.chess-last-to{background-color:#d7c35c!important}
+.chess-move-hint{width:25%;height:25%;background:#283e20aa;box-shadow:0 0 0 2px #fff9}
+.chess-square:has(.chess-piece) .chess-move-hint{width:86%;height:86%;border:4px solid #f5cf3f;background:#f5cf3f16;box-shadow:0 0 18px #f5cf3f90}
+.chess-piece{font-size:clamp(31px,5.8vw,68px);filter:drop-shadow(0 3px 2px #0006)}
+.chess-piece.white{color:#fffef6;text-shadow:0 1px 2px #20261d,0 0 2px #172019}
+.chess-piece.black{color:#17231a;text-shadow:0 1px 1px #f3f0d8,0 0 1px #f3f0d8}
+.chess-piece.just-moved{animation:chess-piece-arrive .34s cubic-bezier(.16,1,.3,1) both}
+.chess-square:disabled{cursor:default}.chess-square:disabled:hover{filter:none}
+.checkmate-board.is-solved .chess-mate-square{box-shadow:inset 0 0 0 5px #d8ff8a,inset 0 0 44px #b8dc76;animation:checkmate-glow .8s ease-in-out infinite alternate}
+.checkmate-top-actions{justify-self:end;display:flex;gap:8px}
+.checkmate-move-meter{display:flex;align-items:center;justify-content:space-between;margin:-2px 0 12px;padding:0 2px}
+.checkmate-move-meter>span{display:flex;gap:6px}.checkmate-move-meter i{width:24px;height:5px;background:#3b4537;transition:background .25s,box-shadow .25s}.checkmate-move-meter i.is-active{background:var(--green);box-shadow:0 0 10px #b8dc7670}.checkmate-move-meter b{font:9px var(--mono);letter-spacing:.08em;color:#aab49f}
+.checkmate-status{border-left-width:3px;background:#111811}.checkmate-status.is-solved{background:#1c2c1a;color:#d4f498}
+.checkmate-next{box-shadow:0 5px 18px #b8dc7628}
+@keyframes chess-piece-arrive{0%{opacity:.25;transform:translateY(-14px) scale(1.22)}65%{opacity:1;transform:translateY(2px) scale(.96)}100%{opacity:1;transform:translateY(0) scale(1)}}
+@media(max-width:780px){.checkmate-top-actions{gap:6px}.checkmate-move-meter{margin:-1px 0 9px}.checkmate-move-meter i{width:20px}.chess-piece{font-size:clamp(28px,9vw,48px)}}
+@media(prefers-reduced-motion:reduce){.chess-piece.just-moved{animation:none}}
