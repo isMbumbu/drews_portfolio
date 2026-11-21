@@ -18,10 +18,6 @@ const puzzles = [
 ]
 
 const files = 'abcdefgh'
-const pieceSymbols = {
-  w: { k: '♔', q: '♕', r: '♖', b: '♗', n: '♘', p: '♙' },
-  b: { k: '♚', q: '♛', r: '♜', b: '♝', n: '♞', p: '♟' },
-}
 const pieceNames = { k: 'king', q: 'queen', r: 'rook', b: 'bishop', n: 'knight', p: 'pawn' }
 const levels = ['Random', 'Beginner', 'Intermediate', 'Advanced']
 const colorName = (color) => color === 'w' ? 'white' : 'black'
@@ -33,6 +29,19 @@ const choosePuzzle = (previousId, level) => {
   return available[Math.floor(Math.random() * available.length)]
 }
 const moveFromUci = (uci) => ({ from: uci.slice(0, 2), to: uci.slice(2, 4), promotion: uci[4] })
+
+function ChessPiece({ color, type, justMoved }) {
+  const detailColor = color === 'w' ? '#263125' : '#e8ecd9'
+  const shapes = {
+    p: <><circle cx="50" cy="23" r="11" /><path d="M42 37c1 8-2 15-9 24l-4 13h42l-4-13c-7-9-10-16-9-24-5 4-11 4-16 0Z" /></>,
+    r: <path d="M29 19h12v10h8V19h12v10h9l-4 43H34l-4-43h9V19Zm4 53h34v8H33z" />,
+    n: <path d="M31 72c2-13 4-22 2-31l-5-9 12 3c8-15 21-20 34-12l-6 11 9 13-5 25H31Zm25-39 2 8 8-2-5-7-5 1Z" />,
+    b: <><path d="M50 14c11 9 16 18 12 28-2 5-7 8-12 10-5-2-10-5-12-10-4-10 1-19 12-28ZM39 53h22l7 20H32l7-20Zm-7 22h36v7H32z" /><path className="piece-detail" d="m44 27 12 13" fill="none" stroke={detailColor} strokeWidth="4" /></>,
+    q: <><path d="m30 29 13 12 7-23 7 23 13-12-5 29H35l-5-29Zm5 33h30l4 11H31l4-11Zm-4 14h32v7H31z" /><circle cx="29" cy="25" r="5" /><circle cx="50" cy="15" r="5" /><circle cx="71" cy="25" r="5" /></>,
+    k: <><path d="M45 11h10v12h11v9H55v8c4 4 9 8 13 14l5 19H27l5-19c4-6 9-10 13-14v-8H34v-9h11V11Zm-13 64h36v7H32z" /><path className="piece-detail" d="M50 8v20M42 18h16" fill="none" stroke={detailColor} strokeWidth="4" /></>,
+  }
+  return <svg className={`chess-piece ${color === 'w' ? 'white' : 'black'}${justMoved ? ' just-moved' : ''}`} viewBox="0 0 100 100" aria-hidden="true" fill="currentColor" stroke="currentColor" strokeWidth="3.5" strokeLinejoin="round">{shapes[type]}<path d="M27 84h46v6H27z" /><path d="M24 91h52v5H24z" /></svg>
+}
 
 function CheckmatePuzzle({ onClose }) {
   const [level, setLevel] = useState('Random')
@@ -145,7 +154,7 @@ function CheckmatePuzzle({ onClose }) {
     squareRefs.current[next]?.focus()
   }
 
-  const chooseSquare = (square) => {
+  const chooseSquare = (square, fromSquare = selected) => {
     if (solved || failed || thinking) return
     const piece = pieces[square]
     if (piece && piece[0] === solverColor && isSolverTurn) {
@@ -154,9 +163,9 @@ function CheckmatePuzzle({ onClose }) {
       playSound('select')
       return
     }
-    if (!selected || !destinations.includes(square)) return
+    if (!fromSquare || !gameRef.current.moves({ square: fromSquare, verbose: true }).some((move) => move.to === square)) return
     const expected = moveFromUci(puzzle.solution[ply])
-    const chosen = { from: selected, to: square }
+    const chosen = { from: fromSquare, to: square }
     if (chosen.from !== expected.from || chosen.to !== expected.to) {
       setSelected(null)
       setFailed(true)
@@ -215,6 +224,10 @@ function CheckmatePuzzle({ onClose }) {
 
       <main className={`checkmate-layout${started && !solved && !failed ? ' is-playing' : ' has-popup'}`}>
         <section className="checkmate-board-column" aria-label="Chessboard">
+          <div className="checkmate-player-strip" aria-label={`You are playing as ${colorName(solverColor)}`}>
+            <span className={`checkmate-side-badge ${colorName(solverColor)}`}><i /> YOU PLAY {solverColor === 'w' ? 'WHITE' : 'BLACK'}</span>
+            <span className="checkmate-opponent-label">{solverColor === 'w' ? 'BLACK' : 'WHITE'} DEFENDS</span>
+          </div>
           <div className={`checkmate-board${solved ? ' is-solved' : ''}`} role="grid" aria-label="Chess board">
             {boardRanks.flatMap((rank) => boardFiles.map((file) => {
               const square = `${file}${rank}`
@@ -225,8 +238,18 @@ function CheckmatePuzzle({ onClose }) {
               const light = (files.indexOf(file) + rank) % 2 === 0
               const squareClass = ['chess-square', light ? 'chess-light' : 'chess-dark', selected === square ? 'chess-selected' : '', lastMove?.from === square ? 'chess-last-from' : '', lastMove?.to === square ? 'chess-last-to' : '', isLastMove ? 'chess-mate-square' : ''].filter(Boolean).join(' ')
               return (
-                <button key={square} ref={(node) => { squareRefs.current[square] = node }} type="button" role="gridcell" tabIndex={focusedSquare === square ? 0 : -1} className={squareClass} disabled={thinking || solved || failed} onFocus={() => setFocusedSquare(square)} onKeyDown={(event) => moveBoardFocus(event, square)} onClick={() => chooseSquare(square)} aria-label={`${square}${piece ? `, ${colorName(pieceColor)} ${pieceNames[piece[1].toLowerCase()]}` : ''}${isHint ? ', legal move' : ''}`}>
-                  {piece && <span className={`chess-piece ${colorName(pieceColor)}${lastMove?.to === square ? ' just-moved' : ''}`}>{pieceSymbols[pieceColor][piece[1].toLowerCase()]}</span>}
+                <button key={square} ref={(node) => { squareRefs.current[square] = node }} type="button" role="gridcell" tabIndex={focusedSquare === square ? 0 : -1} className={squareClass} disabled={thinking || solved || failed} draggable={Boolean(piece && pieceColor === solverColor && isSolverTurn)} onDragStart={(event) => {
+                  if (!piece || pieceColor !== solverColor || !isSolverTurn) { event.preventDefault(); return }
+                  event.dataTransfer.effectAllowed = 'move'
+                  event.dataTransfer.setData('text/plain', square)
+                  setSelected(square)
+                  playSound('select')
+                }} onDragOver={(event) => { if (selected && destinations.includes(square)) event.preventDefault() }} onDrop={(event) => {
+                  event.preventDefault()
+                  const from = event.dataTransfer.getData('text/plain') || selected
+                  if (from) chooseSquare(square, from)
+                }} onFocus={() => setFocusedSquare(square)} onKeyDown={(event) => moveBoardFocus(event, square)} onClick={() => chooseSquare(square)} aria-label={`${square}${piece ? `, ${colorName(pieceColor)} ${pieceNames[piece[1].toLowerCase()]}` : ''}${isHint ? ', legal move' : ''}`}>
+                  {piece && <ChessPiece color={pieceColor} type={piece[1].toLowerCase()} justMoved={lastMove?.to === square} />}
                   {isHint && <span className="chess-move-hint" />}
                   {file === boardFiles[0] && <span className="chess-coordinate rank-coordinate">{rank}</span>}
                   {rank === (solverColor === 'w' ? 1 : 8) && <span className="chess-coordinate file-coordinate">{file}</span>}
@@ -240,9 +263,10 @@ function CheckmatePuzzle({ onClose }) {
 
         {(!started || solved || failed) && <div className="checkmate-popup-backdrop">
           <aside className="checkmate-card checkmate-popup" aria-labelledby="checkmate-popup-title">
+            <button className="checkmate-popup-close" type="button" onClick={onClose} aria-label="Close chess popup"><X size={18} /></button>
             <span className="checkmate-kicker">{solved ? 'CHECKMATE FOUND' : failed ? 'PUZZLE OVER' : `${puzzle.level.toUpperCase()} · 3-MOVE CHALLENGE`}</span>
             <h1 id="checkmate-popup-title">{solved ? <>You found<br /><em>the mate.</em></> : failed ? <>Try another<br /><em>line.</em></> : <>Find the<br /><em>checkmate.</em></>}</h1>
-            <p className="checkmate-instruction">{solved ? 'Beautiful finish. Ready for another position?' : failed ? 'Look for forcing moves that keep the king under pressure.' : 'You have three moves. The opponent will defend after each one.'}</p>
+            <p className="checkmate-instruction">{solved ? 'Beautiful finish. Ready for another position?' : failed ? 'Look for forcing moves that keep the king under pressure.' : `You’re playing as ${solverColor === 'w' ? 'White' : 'Black'}. The board is turned to your side. Find mate in three.`}</p>
             {!started && <div className="checkmate-levels" aria-label="Puzzle difficulty">{levels.map((item) => <button key={item} type="button" className={level === item ? 'is-active' : ''} onClick={() => chooseLevel(item)} aria-pressed={level === item}>{item}</button>)}</div>}
             {(solved || failed) && <div className={`checkmate-hint${hintOpen ? ' is-open' : ''}`}><button className="checkmate-hint-toggle" type="button" onClick={() => setHintOpen((open) => !open)} aria-expanded={hintOpen}><span><Lightbulb size={15} /> HINT</span><span>{hintOpen ? 'Hide' : 'Reveal'}</span></button>{hintOpen && <p>{puzzle.hint}</p>}</div>}
             <div className="checkmate-actions">
