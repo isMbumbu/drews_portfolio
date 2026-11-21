@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { ArrowRight, ArrowUpRight, RotateCcw, X } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Lightbulb, RotateCcw, X } from 'lucide-react'
 import './checkmate-puzzle.css'
 
 const puzzles = [
@@ -165,9 +165,12 @@ function CheckmatePuzzle({ onClose }) {
   const [level, setLevel] = useState('Random')
   const [pieces, setPieces] = useState(() => ({ ...puzzle.pieces }))
   const [selected, setSelected] = useState(null)
+  const [focusedSquare, setFocusedSquare] = useState('a8')
   const [status, setStatus] = useState('Select a white piece, then choose its destination.')
   const [solved, setSolved] = useState(false)
+  const [hintOpen, setHintOpen] = useState(false)
   const screenRef = useRef(null)
+  const squareRefs = useRef({})
   const onCloseRef = useRef(onClose)
   onCloseRef.current = onClose
 
@@ -194,6 +197,8 @@ function CheckmatePuzzle({ onClose }) {
     setPieces({ ...next.pieces })
     setSelected(null)
     setSolved(false)
+    setHintOpen(false)
+    setFocusedSquare('a8')
     setStatus('Select a white piece, then choose its destination.')
   }
 
@@ -201,6 +206,7 @@ function CheckmatePuzzle({ onClose }) {
     setPieces({ ...puzzle.pieces })
     setSelected(null)
     setSolved(false)
+    setHintOpen(false)
     setStatus('Select a white piece, then choose its destination.')
   }
 
@@ -211,7 +217,22 @@ function CheckmatePuzzle({ onClose }) {
     setPieces({ ...next.pieces })
     setSelected(null)
     setSolved(false)
+    setHintOpen(false)
+    setFocusedSquare('a8')
     setStatus('Select a white piece, then choose its destination.')
+  }
+
+  const moveBoardFocus = (event, square) => {
+    const vectors = { ArrowUp: [0, 1], ArrowDown: [0, -1], ArrowLeft: [-1, 0], ArrowRight: [1, 0] }
+    const vector = vectors[event.key]
+    if (!vector) return
+    event.preventDefault()
+    const { x, y } = squareIndex(square)
+    const nx = Math.max(0, Math.min(7, x + vector[0]))
+    const ny = Math.max(0, Math.min(7, y + vector[1]))
+    const next = squareName(nx, ny)
+    setFocusedSquare(next)
+    squareRefs.current[next]?.focus()
   }
 
   const chooseSquare = (square) => {
@@ -268,7 +289,18 @@ function CheckmatePuzzle({ onClose }) {
               ].filter(Boolean).join(' ')
 
               return (
-                <button key={square} type="button" role="gridcell" className={squareClass} onClick={() => chooseSquare(square)} aria-label={`${square}${piece ? `, ${labels[piece]}` : ''}${isHint ? ', legal move' : ''}`}>
+                <button
+                  key={square}
+                  ref={(node) => { squareRefs.current[square] = node }}
+                  type="button"
+                  role="gridcell"
+                  tabIndex={focusedSquare === square ? 0 : -1}
+                  className={squareClass}
+                  onFocus={() => setFocusedSquare(square)}
+                  onKeyDown={(event) => moveBoardFocus(event, square)}
+                  onClick={() => chooseSquare(square)}
+                  aria-label={`${square}${piece ? `, ${labels[piece]}` : ''}${isHint ? ', legal move' : ''}`}
+                >
                   {piece && <span className={`chess-piece ${sides[piece]}`}>{symbols[piece]}</span>}
                   {isHint && <span className="chess-move-hint" />}
                   {fileIndex === 0 && <span className="chess-coordinate rank-coordinate">{rank}</span>}
@@ -281,20 +313,25 @@ function CheckmatePuzzle({ onClose }) {
         </section>
 
         <aside className="checkmate-card">
-          <span className="checkmate-kicker">YOUR CHALLENGE</span>
+          <span className="checkmate-kicker">{solved ? 'CHECKMATE FOUND' : `${puzzle.level.toUpperCase()} PUZZLE`}</span>
           <h1>Find the<br /><em>checkmate.</em></h1>
           <p className="checkmate-instruction">White to move. Find a legal move that forces checkmate.</p>
           <div className="checkmate-levels" aria-label="Puzzle difficulty">
             {levels.map((item) => <button key={item} type="button" className={level === item ? 'is-active' : ''} onClick={() => chooseLevel(item)} aria-pressed={level === item}>{item}</button>)}
           </div>
           <p className={`checkmate-status${solved ? ' is-solved' : ''}`} role="status">{status}</p>
-          <div className="checkmate-hint"><span>HINT</span><p>{puzzle.hint}</p></div>
+          <div className={`checkmate-hint${hintOpen ? ' is-open' : ''}`}>
+            <button className="checkmate-hint-toggle" type="button" onClick={() => setHintOpen((open) => !open)} aria-expanded={hintOpen}>
+              <span><Lightbulb size={15} /> HINT</span><span>{hintOpen ? 'Hide' : 'Reveal'}</span>
+            </button>
+            {hintOpen && <p>{puzzle.hint}</p>}
+          </div>
           <div className="checkmate-actions">
             <button className="checkmate-next" type="button" onClick={newPuzzle}>{solved ? 'Next puzzle' : 'Random puzzle'} <ArrowRight size={16} /></button>
             <button className="checkmate-reset" type="button" onClick={resetPuzzle}><RotateCcw size={14} /> Reset board</button>
           </div>
           {solved && <a className="checkmate-challenge" href="https://www.chess.com/member/mbumbu_a" target="_blank" rel="noopener noreferrer">Challenge me on Chess.com <ArrowUpRight size={16} /></a>}
-          <p className="checkmate-help">Click a white piece to see its moves. Click a highlighted square to move.</p>
+          <p className="checkmate-help">Select a white piece, then choose a highlighted square. Use arrow keys to move around the board.</p>
         </aside>
       </main>
     </div>,
