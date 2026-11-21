@@ -162,3 +162,36 @@
   .checkmate-board{width:100%;border-width:7px}
 }
 @media(max-width:780px) and (orientation:portrait){.checkmate-layout.is-playing .checkmate-board-column,.checkmate-layout.has-popup .checkmate-board-column{width:min(calc(100vw - 28px),58vh)}}
+
+/* Puzzle controls stay anchored to the larger board, with a compact phone status bar. */
+.checkmate-layout.is-playing{width:min(100%,1440px);grid-template-columns:minmax(0,1fr) minmax(320px,380px);gap:clamp(24px,3.5vw,56px)}
+.checkmate-layout.is-playing .checkmate-board-column{width:min(100%,min(78vh,760px));max-width:min(78vh,760px)}
+.checkmate-layout.is-playing .checkmate-board{width:100%;max-width:none}
+.checkmate-layout.is-playing .checkmate-player-strip,.checkmate-layout.is-playing .checkmate-board-caption{width:100%}
+.checkmate-board-quickbar{display:none}
+.checkmate-turn-indicator{display:flex;align-items:center;gap:8px;color:#cbd4c2;font:10px var(--mono);letter-spacing:.04em}
+.checkmate-turn-indicator i{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 10px #b8dc7670}
+.checkmate-turn-indicator i.is-opponent{background:#d6ad69;box-shadow:0 0 10px #d6ad6970}
+.checkmate-move-meter{gap:10px}.checkmate-move-meter>span{display:flex;gap:5px}.checkmate-move-meter i{width:20px;height:5px}
+.checkmate-review-link{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;padding:10px;border:1px solid #536548;background:#182018;color:var(--green);font-size:12px;cursor:pointer}
+.checkmate-review-link:hover,.checkmate-review-exit:hover{border-color:var(--green);background:#20291d}
+.checkmate-review-panel h2 em{display:block;color:var(--green);font-style:normal}
+.checkmate-review-moves{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0 18px}
+.checkmate-review-moves span{padding:8px 10px;border:1px solid #3c4938;background:#111811;color:#e0e6d8;font:11px var(--mono)}
+.checkmate-review-exit{width:100%;margin-top:12px;padding:10px;border:1px solid #47543f;background:transparent;color:#cbd4c2;font-size:12px;cursor:pointer}
+.checkmate-progress-steps{display:flex;gap:7px}.checkmate-progress-steps i{height:6px;flex:1;background:#374232;transition:background .25s,box-shadow .25s}.checkmate-progress-steps i.is-active{background:var(--green);box-shadow:0 0 12px #b8dc7670}
+@media(max-width:1000px) and (min-width:781px){.checkmate-layout.is-playing{grid-template-columns:minmax(0,1fr) minmax(290px,340px);gap:22px}.checkmate-layout.is-playing .checkmate-board-column{width:min(100%,min(72vh,680px));max-width:min(72vh,680px)}}
+@media(max-width:780px){
+  .checkmate-layout.is-playing{display:flex;flex-direction:column;align-items:center;gap:12px;padding-top:10px}
+  .checkmate-layout.is-playing .checkmate-board-column{width:min(calc(100vw - 28px),72vh);max-width:none;gap:8px}
+  .checkmate-layout.is-playing .checkmate-board{width:100%;border-width:6px}
+  .checkmate-layout.is-playing .checkmate-player-strip,.checkmate-layout.is-playing .checkmate-board-caption{width:100%}
+  .checkmate-board-quickbar{width:100%;min-height:42px;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 10px;border:1px solid #344032;background:#151c14}
+  .checkmate-turn-indicator{font-size:9px}
+  .checkmate-move-meter{margin:0;padding:0;border:0}
+  .checkmate-move-meter i{width:16px;height:5px}
+  .checkmate-game-panel{width:min(100%,620px);max-height:none;padding:16px 18px}
+  .checkmate-review-panel{margin-top:2px}
+}
+@media(max-width:780px) and (orientation:landscape){.checkmate-layout.is-playing .checkmate-board-column{width:min(66vh,calc(100vw - 28px))}}
+@media(prefers-reduced-motion:reduce){.checkmate-move-meter i{transition:none}}

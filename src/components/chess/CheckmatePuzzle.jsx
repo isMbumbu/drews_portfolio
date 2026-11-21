@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Chess } from 'chess.js'
 import { Chessboard } from 'react-chessboard'
-import { ArrowRight, ArrowUpRight, Lightbulb, RotateCcw, Volume2, VolumeX, X } from 'lucide-react'
+import { ArrowLeft, ArrowRight, ArrowUpRight, Lightbulb, RotateCcw, Volume2, VolumeX, X } from 'lucide-react'
 import './checkmate-puzzle.css'
 
 // Positions and main lines are from the CC0 Lichess puzzle database.
@@ -50,6 +50,9 @@ function CheckmatePuzzle({ onClose }) {
   const [thinking, setThinking] = useState(false)
   const [movesLeft, setMovesLeft] = useState(3)
   const [hintOpen, setHintOpen] = useState(false)
+  const [reviewMode, setReviewMode] = useState(false)
+  const [reviewIndex, setReviewIndex] = useState(0)
+  const reviewLineRef = useRef([])
   const [soundOn, setSoundOn] = useState(true)
   const screenRef = useRef(null)
   const audioContextRef = useRef(null)
@@ -131,6 +134,9 @@ function CheckmatePuzzle({ onClose }) {
     setMistakes(0)
     setThinking(false)
     setMovesLeft(3)
+    setReviewMode(false)
+    setReviewIndex(0)
+    reviewLineRef.current = []
     setLastMove(null)
     setHintOpen(false)
     turnSnapshotsRef.current = []
@@ -159,8 +165,40 @@ function CheckmatePuzzle({ onClose }) {
     loadPuzzle(choosePuzzle(puzzle.id, nextLevel))
   }
 
+  const beginReview = () => {
+    reviewLineRef.current = gameRef.current.history({ verbose: true }).map(({ from, to, promotion }) => ({ from, to, ...(promotion ? { promotion } : {}) }))
+    gameRef.current = new Chess(puzzle.fen)
+    setPieces(displayPieces(gameRef.current))
+    setLastMove(null)
+    setReviewIndex(0)
+    setReviewMode(true)
+    setSolved(false)
+    setFailed(false)
+    setStatus('Review the line from the starting position.')
+  }
+
+  const stepReview = (direction) => {
+    const nextIndex = Math.max(0, Math.min(reviewLineRef.current.length, reviewIndex + direction))
+    const game = new Chess(puzzle.fen)
+    let last = null
+    for (const move of reviewLineRef.current.slice(0, nextIndex)) last = game.move(move)
+    gameRef.current = game
+    setPieces(displayPieces(game))
+    setLastMove(last ? { from: last.from, to: last.to } : null)
+    setReviewIndex(nextIndex)
+  }
+
+  const exitReview = () => {
+    setReviewMode(false)
+    setSolved(true)
+    gameRef.current = new Chess(puzzle.fen)
+    for (const move of reviewLineRef.current) gameRef.current.move(move)
+    setPieces(displayPieces(gameRef.current))
+    setLastMove(reviewLineRef.current.length ? { from: reviewLineRef.current.at(-1).from, to: reviewLineRef.current.at(-1).to } : null)
+  }
+
   const attemptMove = (fromSquare, square) => {
-    if (!started || solved || failed || thinking || !isSolverTurn) return false
+    if (!started || solved || failed || thinking || reviewMode || !isSolverTurn) return false
     const movingPiece = pieces[fromSquare]
     if (!movingPiece || movingPiece[0] !== solverColor) return false
     if (!gameRef.current.moves({ square: fromSquare, verbose: true }).some((move) => move.to === square)) return false
@@ -218,7 +256,7 @@ function CheckmatePuzzle({ onClose }) {
   }
 
   const chooseSquare = (square) => {
-    if (!started || solved || failed || thinking || !isSolverTurn) return
+    if (!started || solved || failed || thinking || reviewMode || !isSolverTurn) return
     const piece = pieces[square]
     if (piece && piece[0] === solverColor && isSolverTurn) {
       setSelected(square === selected ? null : square)
@@ -262,7 +300,7 @@ function CheckmatePuzzle({ onClose }) {
         </div>
       </header>
 
-      <main className={`checkmate-layout${started && !solved && !failed ? ' is-playing' : ' has-popup'}`}>
+      <main className={`checkmate-layout${started && (!solved || reviewMode) && !failed ? ' is-playing' : ' has-popup'}`}>
         <section className="checkmate-board-column" aria-label="Chessboard">
           <div className="checkmate-player-strip" aria-label={`You are playing as ${colorName(solverColor)}`}>
             <span className={`checkmate-side-badge ${colorName(solverColor)}`}><i /> YOU PLAY {solverColor === 'w' ? 'WHITE' : 'BLACK'}</span>
@@ -273,8 +311,8 @@ function CheckmatePuzzle({ onClose }) {
               position={gameRef.current.fen()}
               boardOrientation={colorName(solverColor)}
               animationDuration={280}
-              arePiecesDraggable={started && !solved && !failed && !thinking && isSolverTurn}
-              isDraggablePiece={(piece) => started && !solved && !failed && !thinking && isSolverTurn && piece[0] === solverColor}
+              arePiecesDraggable={started && !solved && !failed && !thinking && !reviewMode && isSolverTurn}
+              isDraggablePiece={(piece) => started && !solved && !failed && !thinking && !reviewMode && isSolverTurn && piece[0] === solverColor}
               onPieceDrop={handlePieceDrop}
               onSquareClick={handleBoardSquareClick}
               autoPromoteToQueen
@@ -286,15 +324,22 @@ function CheckmatePuzzle({ onClose }) {
               customSquareStyles={moveHighlights}
             />
           </div>
-          <div className="checkmate-board-caption"><span>{thinking ? 'OPPONENT IS THINKING' : solved ? 'CHECKMATE' : failed ? 'TRY AGAIN' : `${solverColor === 'w' ? 'WHITE' : 'BLACK'} TO MOVE · MATE IN 3`}</span><span>{movesLeft} {movesLeft === 1 ? 'MOVE' : 'MOVES'} LEFT</span></div>
+          <div className="checkmate-board-caption"><span>{reviewMode ? `REVIEWING LINE · ${reviewIndex}/${reviewLineRef.current.length} PLIES` : thinking ? `${solverColor === 'w' ? 'BLACK' : 'WHITE'} DEFENDS` : solved ? 'CHECKMATE' : failed ? 'TRY AGAIN' : `${isSolverTurn ? (solverColor === 'w' ? 'WHITE' : 'BLACK') : (solverColor === 'w' ? 'BLACK' : 'WHITE')} TO MOVE`}</span><span>{reviewMode ? 'REVIEW' : `MATE IN 3 · ${movesLeft} LEFT`}</span></div>
+          <div className="checkmate-board-quickbar" role="status"><span className="checkmate-turn-indicator"><i className={thinking ? 'is-opponent' : ''} />{reviewMode ? 'Line review' : thinking ? `${solverColor === 'w' ? 'Black' : 'White'} is defending` : `${isSolverTurn ? 'Your' : 'Opponent’s'} turn · ${colorName(isSolverTurn ? solverColor : (solverColor === 'w' ? 'b' : 'w'))}`}</span><span className="checkmate-move-meter" aria-label={`${3 - movesLeft} of 3 moves played`}><b>{reviewMode ? 'REVIEW' : `${3 - movesLeft}/3`}</b><span>{[0, 1, 2].map((step) => <i key={step} className={!reviewMode && step < 3 - movesLeft ? 'is-active' : ''} />)}</span></span></div>
         </section>
 
-        {started && !solved && !failed && <aside className="checkmate-game-panel" aria-label="Puzzle information and controls">
+        {reviewMode ? <aside className="checkmate-game-panel checkmate-review-panel" aria-label="Review puzzle line">
+          <span className="checkmate-panel-kicker">LINE REVIEW</span><h2>Replay <em>the solution</em></h2>
+          <p className="checkmate-panel-prompt">Step through each move and the defense.</p>
+          <div className="checkmate-review-moves" aria-live="polite">{reviewLineRef.current.slice(0, reviewIndex).map((move, index) => <span key={`${move.from}-${move.to}-${index}`}>{index % 2 === 0 ? `${Math.floor(index / 2) + 1}.` : ''} {move.from}–{move.to}</span>)}{reviewIndex === 0 && <span>Starting position</span>}</div>
+          <div className="checkmate-panel-actions"><button type="button" className="checkmate-panel-button" onClick={() => stepReview(-1)} disabled={reviewIndex === 0}><ArrowLeft size={15} /> Previous</button><button type="button" className="checkmate-panel-button" onClick={() => stepReview(1)} disabled={reviewIndex >= reviewLineRef.current.length}>Next move <ArrowRight size={15} /></button></div>
+          <button type="button" className="checkmate-review-exit" onClick={exitReview}>Back to result</button>
+        </aside> : started && !solved && !failed && <aside className="checkmate-game-panel" aria-label="Puzzle information and controls">
           <span className="checkmate-panel-kicker">AA. · TACTICAL TRAINING</span>
           <h2>Puzzle <em>#{puzzle.id}</em></h2>
           <div className="checkmate-puzzle-meta"><span>{puzzle.level.toUpperCase()}</span><span>{puzzle.rating} ELO</span></div>
           <p className="checkmate-panel-prompt">Find the best move for <strong>{solverColor === 'w' ? 'White' : 'Black'}</strong>.</p>
-          <div className="checkmate-progress"><div><span>Progress</span><strong>{3 - movesLeft} / 3 moves</strong></div><span className="checkmate-progress-track"><i style={{ width: `${((3 - movesLeft) / 3) * 100}%` }} /></span></div>
+          <div className="checkmate-progress"><div><span>Progress</span><strong>{3 - movesLeft} / 3 moves</strong></div><span className="checkmate-progress-steps" aria-label={`${3 - movesLeft} of 3 moves played`}>{[0, 1, 2].map((step) => <i key={step} className={step < 3 - movesLeft ? 'is-active' : ''} />)}</span></div>
           <p className="checkmate-status checkmate-panel-status" role="status">{status}</p>
           <div className="checkmate-panel-actions">
             <button type="button" className={`checkmate-panel-button${hintOpen ? ' is-active' : ''}`} onClick={() => setHintOpen((open) => !open)} aria-expanded={hintOpen}><Lightbulb size={15} /> {hintOpen ? 'Hide hint' : 'Hint'}</button>
@@ -307,7 +352,7 @@ function CheckmatePuzzle({ onClose }) {
           </div>
         </aside>}
 
-        {(!started || solved || failed) && <div className="checkmate-popup-backdrop">
+        {(!started || solved || failed) && !reviewMode && <div className="checkmate-popup-backdrop">
           <aside className="checkmate-card checkmate-popup" aria-labelledby="checkmate-popup-title">
             <button className="checkmate-popup-close" type="button" onClick={onClose} aria-label="Close chess popup"><X size={18} /></button>
             <span className="checkmate-kicker">{solved ? 'CHECKMATE FOUND' : failed ? 'PUZZLE OVER' : `${puzzle.level.toUpperCase()} · 3-MOVE CHALLENGE`}</span>
@@ -315,6 +360,7 @@ function CheckmatePuzzle({ onClose }) {
             <p className="checkmate-instruction">{solved ? 'Beautiful finish. Ready for another position?' : failed ? 'Look for forcing moves that keep the king under pressure.' : `You’re playing as ${solverColor === 'w' ? 'White' : 'Black'}. The board is turned to your side. Find mate in three.`}</p>
             {!started && <div className="checkmate-levels" aria-label="Puzzle difficulty">{levels.map((item) => <button key={item} type="button" className={level === item ? 'is-active' : ''} onClick={() => chooseLevel(item)} aria-pressed={level === item}>{item}</button>)}</div>}
             {(solved || failed) && <div className={`checkmate-hint${hintOpen ? ' is-open' : ''}`}><button className="checkmate-hint-toggle" type="button" onClick={() => setHintOpen((open) => !open)} aria-expanded={hintOpen}><span><Lightbulb size={15} /> HINT</span><span>{hintOpen ? 'Hide' : 'Reveal'}</span></button>{hintOpen && <p>{puzzle.hint}</p>}</div>}
+            {solved && <button type="button" className="checkmate-review-link" onClick={beginReview}>Review line <ArrowRight size={15} /></button>}
             <div className="checkmate-actions">
               <button className="checkmate-next" type="button" onClick={solved ? newPuzzle : failed ? retryPuzzle : startPuzzle}>{solved ? 'Next puzzle' : failed ? 'Try again' : 'Start puzzle'} <ArrowRight size={16} /></button>
               {solved && <button className="checkmate-reset" type="button" onClick={newPuzzle}>Choose another challenge</button>}
