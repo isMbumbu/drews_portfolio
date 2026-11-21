@@ -195,3 +195,40 @@
 }
 @media(max-width:780px) and (orientation:landscape){.checkmate-layout.is-playing .checkmate-board-column{width:min(66vh,calc(100vw - 28px))}}
 @media(prefers-reduced-motion:reduce){.checkmate-move-meter i{transition:none}}
+
+/* Chess.com-inspired analysis layout: crisp green board, classic piece contrast, tight side panel. */
+.checkmate-screen{background:#1b1b19;color:#e8e8e3}
+.checkmate-screen:before{opacity:.05;background:repeating-linear-gradient(0deg,transparent 0 4px,rgba(255,255,255,.025) 4px 5px)}
+.checkmate-topbar{border-color:#3a3a36}
+.checkmate-live-dot{background:#81b64c;box-shadow:0 0 12px #81b64c70}
+.checkmate-layout.is-playing{width:min(100%,1380px);grid-template-columns:minmax(0,760px) minmax(320px,400px);justify-content:center;gap:clamp(22px,2.6vw,38px)}
+.checkmate-layout.is-playing .checkmate-board-column{width:min(100%,min(78vh,760px));max-width:min(78vh,760px);justify-self:center}
+.checkmate-layout.is-playing .checkmate-board{border:5px solid #2b2b28;background:#2b2b28;box-shadow:0 14px 40px #0006,0 0 0 1px #48483e}
+.checkmate-board .square-55d63{transition:filter .14s ease}
+.checkmate-board .square-55d63:hover{filter:brightness(1.045)}
+.checkmate-board [data-piece] svg{filter:drop-shadow(0 1px 1px #0005)}
+.checkmate-board [data-piece^="w"] svg path,.checkmate-board [data-piece^="w"] svg circle{fill:#f7f4e7!important;stroke:#55594c!important;stroke-width:.8px!important;stroke-linejoin:round}
+.checkmate-board [data-piece^="b"] svg path,.checkmate-board [data-piece^="b"] svg circle{fill:#262722!important;stroke:#d5d2c1!important;stroke-width:.55px!important;stroke-linejoin:round}
+.checkmate-player-strip{min-height:34px}
+.checkmate-side-badge{border-color:#4a5c40!important;background:#262a23!important;color:#e1e9d9!important}
+.checkmate-side-badge i{background:#81b64c!important;box-shadow:0 0 9px #81b64c80!important}
+.checkmate-opponent-label{color:#aaa99f!important}
+.checkmate-board-caption{color:#aaa99f}
+.checkmate-game-panel{border:1px solid #3d3d38;background:#252522;box-shadow:0 14px 38px #0004;animation:none}
+.checkmate-game-panel h2{color:#f0f0eb}
+.checkmate-panel-prompt{color:#d0d0ca}
+.checkmate-panel-prompt strong,.checkmate-game-panel h2 em,.checkmate-panel-kicker{color:#a7cc75}
+.checkmate-panel-status{background:#1d1d1a;border-left-color:#81b64c;color:#d3d3cc}
+.checkmate-panel-button{border-color:#505049;background:#2d2d29;color:#e1e1da}
+.checkmate-panel-button:hover:not(:disabled),.checkmate-panel-button.is-active{border-color:#81b64c;background:#343a2e;color:#c4e69a}
+.checkmate-progress-steps i.is-active,.checkmate-move-meter i.is-active{background:#81b64c;box-shadow:0 0 10px #81b64c60}
+.checkmate-history li{background:#1e1e1b}
+.checkmate-board-quickbar{border-color:#41413b;background:#252522}
+.checkmate-turn-indicator i{background:#81b64c;box-shadow:0 0 9px #81b64c70}
+.checkmate-review-link{border-color:#505049;background:#2d2d29;color:#c4e69a}
+.checkmate-review-exit{border-color:#505049;color:#e1e1da}
+@media(max-width:1000px) and (min-width:781px){.checkmate-layout.is-playing{grid-template-columns:minmax(0,1fr) minmax(290px,350px);gap:20px}.checkmate-layout.is-playing .checkmate-board-column{width:min(100%,min(72vh,660px));max-width:min(72vh,660px)}}
+@media(max-width:780px){
+  .checkmate-layout.is-playing .checkmate-board-column{width:min(calc(100vw - 28px),72vh);max-width:none}
+  .checkmate-layout.is-playing .checkmate-board{border-width:4px}
+}

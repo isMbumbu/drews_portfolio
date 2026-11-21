@@ -318,9 +318,9 @@ function CheckmatePuzzle({ onClose }) {
               autoPromoteToQueen
               showBoardNotation
               customBoardStyle={{ borderRadius: '2px', boxShadow: 'none' }}
-              customLightSquareStyle={{ backgroundColor: '#e8d2aa', backgroundImage: 'linear-gradient(135deg,rgba(255,249,220,.26),transparent 58%),repeating-linear-gradient(3deg,rgba(125,83,42,.045) 0 1px,transparent 1px 9px)' }}
-              customDarkSquareStyle={{ backgroundColor: '#936741', backgroundImage: 'linear-gradient(135deg,rgba(255,218,156,.12),transparent 62%),repeating-linear-gradient(-2deg,rgba(38,25,15,.085) 0 1px,transparent 1px 10px)' }}
-              customNotationStyle={{ color: '#243321', fontWeight: 700, textShadow: '0 1px rgba(255,255,255,.55)' }}
+              customLightSquareStyle={{ backgroundColor: '#eeeed2' }}
+              customDarkSquareStyle={{ backgroundColor: '#779556' }}
+              customNotationStyle={{ color: '#586f42', fontWeight: 700, textShadow: '0 1px rgba(255,255,255,.45)' }}
               customSquareStyles={moveHighlights}
             />
           </div>
