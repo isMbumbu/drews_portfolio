@@ -40,6 +40,7 @@ function CheckmatePuzzle({ onClose }) {
   const gameRef = useRef(null)
   if (!gameRef.current) gameRef.current = new Chess(puzzle.fen)
   const [pieces, setPieces] = useState(() => displayPieces(gameRef.current))
+  const [started, setStarted] = useState(false)
   const [ply, setPly] = useState(0)
   const [selected, setSelected] = useState(null)
   const [focusedSquare, setFocusedSquare] = useState('a8')
@@ -109,6 +110,7 @@ function CheckmatePuzzle({ onClose }) {
     if (replyTimerRef.current) window.clearTimeout(replyTimerRef.current)
     gameRef.current = new Chess(next.fen)
     setPuzzle(next)
+    setStarted(false)
     setPieces(displayPieces(gameRef.current))
     setPly(0)
     setSelected(null)
@@ -123,6 +125,8 @@ function CheckmatePuzzle({ onClose }) {
   }
   const newPuzzle = () => loadPuzzle(choosePuzzle(puzzle.id, level))
   const resetPuzzle = () => loadPuzzle(puzzle)
+  const retryPuzzle = () => { loadPuzzle(puzzle); setStarted(true) }
+  const startPuzzle = () => setStarted(true)
   const chooseLevel = (nextLevel) => {
     setLevel(nextLevel)
     loadPuzzle(choosePuzzle(puzzle.id, nextLevel))
@@ -204,11 +208,12 @@ function CheckmatePuzzle({ onClose }) {
         <div className="checkmate-top-title"><span className="checkmate-live-dot" /> CHESS PUZZLE <i>·</i> MATE IN THREE</div>
         <div className="checkmate-top-actions">
           <button className="checkmate-icon-button" type="button" onClick={() => setSoundOn((enabled) => !enabled)} aria-label={soundOn ? 'Mute puzzle sounds' : 'Enable puzzle sounds'} aria-pressed={soundOn}>{soundOn ? <Volume2 size={17} /> : <VolumeX size={17} />}</button>
+          {started && !solved && !failed && <button className="checkmate-icon-button" type="button" onClick={resetPuzzle} aria-label="Restart puzzle"><RotateCcw size={16} /></button>}
           <button className="checkmate-icon-button" type="button" onClick={onClose} aria-label="Close chess puzzle"><X size={19} /></button>
         </div>
       </header>
 
-      <main className="checkmate-layout">
+      <main className={`checkmate-layout${started && !solved && !failed ? ' is-playing' : ' has-popup'}`}>
         <section className="checkmate-board-column" aria-label="Chessboard">
           <div className={`checkmate-board${solved ? ' is-solved' : ''}`} role="grid" aria-label="Chess board">
             {boardRanks.flatMap((rank) => boardFiles.map((file) => {
@@ -230,20 +235,23 @@ function CheckmatePuzzle({ onClose }) {
             }))}
           </div>
           <div className="checkmate-board-caption"><span>{thinking ? 'OPPONENT IS THINKING' : solved ? 'CHECKMATE' : failed ? 'TRY AGAIN' : `${solverColor === 'w' ? 'WHITE' : 'BLACK'} TO MOVE · MATE IN 3`}</span><span>{movesLeft} {movesLeft === 1 ? 'MOVE' : 'MOVES'} LEFT</span></div>
+          {started && !solved && !failed && <p className="checkmate-play-status" role="status">{status}</p>}
         </section>
 
-        <aside className="checkmate-card">
-          <span className="checkmate-kicker">{solved ? 'CHECKMATE FOUND' : failed ? 'PUZZLE OVER' : `${puzzle.level.toUpperCase()} · 3-MOVE CHALLENGE`}</span>
-          <h1>Find the<br /><em>checkmate.</em></h1>
-          <p className="checkmate-instruction">You have three moves. The opponent will play the best defense in the puzzle line.</p>
-          <div className="checkmate-levels" aria-label="Puzzle difficulty">{levels.map((item) => <button key={item} type="button" className={level === item ? 'is-active' : ''} onClick={() => chooseLevel(item)} aria-pressed={level === item}>{item}</button>)}</div>
-          <div className="checkmate-move-meter" aria-label={`${movesLeft} moves remaining`}><span>{[0,1,2].map((step) => <i key={step} className={step < movesLeft ? 'is-active' : ''} />)}</span><b>{movesLeft} / 3 MOVES</b></div>
-          <p className={`checkmate-status${solved ? ' is-solved' : ''}`} role="status">{status}</p>
-          <div className={`checkmate-hint${hintOpen ? ' is-open' : ''}`}><button className="checkmate-hint-toggle" type="button" onClick={() => setHintOpen((open) => !open)} aria-expanded={hintOpen}><span><Lightbulb size={15} /> HINT</span><span>{hintOpen ? 'Hide' : 'Reveal'}</span></button>{hintOpen && <p>{puzzle.hint}</p>}</div>
-          <div className="checkmate-actions"><button className="checkmate-next" type="button" onClick={failed ? resetPuzzle : newPuzzle}>{solved ? 'Next puzzle' : failed ? 'Try again' : 'Next challenge'} <ArrowRight size={16} /></button><button className="checkmate-reset" type="button" onClick={resetPuzzle}><RotateCcw size={14} /> Reset board</button></div>
-          {solved && <a className="checkmate-challenge" href="https://www.chess.com/member/mbumbu_a" target="_blank" rel="noopener noreferrer">Challenge me on Chess.com <ArrowUpRight size={16} /></a>}
-          <p className="checkmate-help">Choose a piece, then a highlighted legal square. Use arrow keys to move around the board.</p>
-        </aside>
+        {(!started || solved || failed) && <div className="checkmate-popup-backdrop">
+          <aside className="checkmate-card checkmate-popup" aria-labelledby="checkmate-popup-title">
+            <span className="checkmate-kicker">{solved ? 'CHECKMATE FOUND' : failed ? 'PUZZLE OVER' : `${puzzle.level.toUpperCase()} · 3-MOVE CHALLENGE`}</span>
+            <h1 id="checkmate-popup-title">{solved ? <>You found<br /><em>the mate.</em></> : failed ? <>Try another<br /><em>line.</em></> : <>Find the<br /><em>checkmate.</em></>}</h1>
+            <p className="checkmate-instruction">{solved ? 'Beautiful finish. Ready for another position?' : failed ? 'Look for forcing moves that keep the king under pressure.' : 'You have three moves. The opponent will defend after each one.'}</p>
+            {!started && <div className="checkmate-levels" aria-label="Puzzle difficulty">{levels.map((item) => <button key={item} type="button" className={level === item ? 'is-active' : ''} onClick={() => chooseLevel(item)} aria-pressed={level === item}>{item}</button>)}</div>}
+            {(solved || failed) && <div className={`checkmate-hint${hintOpen ? ' is-open' : ''}`}><button className="checkmate-hint-toggle" type="button" onClick={() => setHintOpen((open) => !open)} aria-expanded={hintOpen}><span><Lightbulb size={15} /> HINT</span><span>{hintOpen ? 'Hide' : 'Reveal'}</span></button>{hintOpen && <p>{puzzle.hint}</p>}</div>}
+            <div className="checkmate-actions">
+              <button className="checkmate-next" type="button" onClick={solved ? newPuzzle : failed ? retryPuzzle : startPuzzle}>{solved ? 'Next puzzle' : failed ? 'Try again' : 'Start puzzle'} <ArrowRight size={16} /></button>
+              {solved && <button className="checkmate-reset" type="button" onClick={newPuzzle}>Choose another challenge</button>}
+            </div>
+            {solved && <a className="checkmate-challenge" href="https://www.chess.com/member/mbumbu_a" target="_blank" rel="noopener noreferrer">Challenge me on Chess.com <ArrowUpRight size={16} /></a>}
+          </aside>
+        </div>}
       </main>
     </div>,
     document.body,
