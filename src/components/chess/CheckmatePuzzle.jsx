@@ -305,6 +305,7 @@ function CheckmatePuzzle({ onClose }) {
           <div className="checkmate-player-strip" aria-label={`You are playing as ${colorName(solverColor)}`}>
             <span className={`checkmate-side-badge ${colorName(solverColor)}`}><i /> YOU PLAY {solverColor === 'w' ? 'WHITE' : 'BLACK'}</span>
             <span className="checkmate-opponent-label">{solverColor === 'w' ? 'BLACK' : 'WHITE'} DEFENDS</span>
+            <span className="checkmate-rating-badge" aria-label={`Puzzle rating ${puzzle.rating} ELO`}><small>PUZZLE</small><strong>{puzzle.rating}</strong><i>ELO</i></span>
           </div>
           <div className={`checkmate-board${solved ? ' is-solved' : ''}`} aria-label={`Chess board, viewed from ${colorName(solverColor)}’s side`}>
             <Chessboard
@@ -337,7 +338,7 @@ function CheckmatePuzzle({ onClose }) {
         </aside> : started && !solved && !failed && <aside className="checkmate-game-panel" aria-label="Puzzle information and controls">
           <span className="checkmate-panel-kicker">AA. · TACTICAL TRAINING</span>
           <h2>Puzzle <em>#{puzzle.id}</em></h2>
-          <div className="checkmate-puzzle-meta"><span>{puzzle.level.toUpperCase()}</span><span>{puzzle.rating} ELO</span></div>
+          <div className="checkmate-puzzle-meta"><span>{puzzle.level.toUpperCase()} · MATE IN 3</span></div>
           <p className="checkmate-panel-prompt">Find the best move for <strong>{solverColor === 'w' ? 'White' : 'Black'}</strong>.</p>
           <div className="checkmate-progress"><div><span>Progress</span><strong>{3 - movesLeft} / 3 moves</strong></div><span className="checkmate-progress-steps" aria-label={`${3 - movesLeft} of 3 moves played`}>{[0, 1, 2].map((step) => <i key={step} className={step < 3 - movesLeft ? 'is-active' : ''} />)}</span></div>
           <p className="checkmate-status checkmate-panel-status" role="status">{status}</p>

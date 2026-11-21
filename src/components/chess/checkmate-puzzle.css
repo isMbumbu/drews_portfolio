@@ -227,6 +227,13 @@
 .checkmate-turn-indicator i{background:#81b64c;box-shadow:0 0 9px #81b64c70}
 .checkmate-review-link{border-color:#505049;background:#2d2d29;color:#c4e69a}
 .checkmate-review-exit{border-color:#505049;color:#e1e1da}
+.checkmate-player-strip{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px}
+.checkmate-opponent-label{justify-self:end}
+.checkmate-rating-badge{display:flex;align-items:baseline;gap:5px;padding:6px 9px;border:1px solid #4a5c40;background:#252a22;color:#dfe5d9;font-family:var(--mono);line-height:1}
+.checkmate-rating-badge small{color:#9ba691;font-size:8px;letter-spacing:.12em}
+.checkmate-rating-badge strong{color:#b8dc76;font-size:14px;font-weight:700}
+.checkmate-rating-badge i{color:#aeb5a7;font-size:8px;font-style:normal}
+@media(max-width:780px){.checkmate-player-strip{grid-template-columns:auto 1fr auto;gap:7px}.checkmate-side-badge{padding:7px 9px!important;font-size:8px!important}.checkmate-opponent-label{font-size:8px!important}.checkmate-rating-badge{gap:3px;padding:5px 6px}.checkmate-rating-badge small,.checkmate-rating-badge i{font-size:7px}.checkmate-rating-badge strong{font-size:12px}}
 @media(max-width:1000px) and (min-width:781px){.checkmate-layout.is-playing{grid-template-columns:minmax(0,1fr) minmax(290px,350px);gap:20px}.checkmate-layout.is-playing .checkmate-board-column{width:min(100%,min(72vh,660px));max-width:min(72vh,660px)}}
 @media(max-width:780px){
   .checkmate-layout.is-playing .checkmate-board-column{width:min(calc(100vw - 28px),72vh);max-width:none}
